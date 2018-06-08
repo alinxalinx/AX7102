@@ -1,0 +1,21 @@
+#-----------------------------------------------------------
+# Vivado v2015.4 (64-bit)
+# SW Build 1412921 on Wed Nov 18 09:43:45 MST 2015
+# IP Build 1412160 on Tue Nov 17 13:47:24 MST 2015
+# Start of session at: Mon Dec 05 09:50:02 2016
+# Process ID: 18180
+# Current directory: E:/Project/AX7100/verilog/ethernet_test/ethernet_test
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent18400 E:\Project\AX7100\verilog\ethernet_test\ethernet_test\ethernet_test.xpr
+# Log file: E:/Project/AX7100/verilog/ethernet_test/ethernet_test/vivado.log
+# Journal file: E:/Project/AX7100/verilog/ethernet_test/ethernet_test\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project E:/Project/AX7100/verilog/ethernet_test/ethernet_test/ethernet_test.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2015.4/data/ip'.
+open_project: Time (s): cpu = 00:00:13 ; elapsed = 00:00:07 . Memory (MB): peak = 757.223 ; gain = 187.816
+exit
+INFO: [Common 17-206] Exiting Vivado at Mon Dec 05 09:50:30 2016...
