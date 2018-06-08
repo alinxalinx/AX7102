@@ -1,0 +1,8 @@
+"dscr.obj",
+"fw.obj",
+"CYStream.obj",
+"..\lib\EZUSB.LIB",
+".\USBJmpTb.obj" 
+TO "CYStream" 
+CODE( 0x0080 )
+XDATA( 0x1400 )

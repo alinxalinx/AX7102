@@ -1,0 +1,910 @@
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE CYSTREAM
+OBJECT MODULE PLACED IN .\CYStream.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\CYStream.c OPTIMIZE(6,SIZE) BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #pragma NOIV               // Do not generate interrupt vectors
+   2          //-----------------------------------------------------------------------------
+   3          //   File:      CYStream.c
+   4          //   Contents:   USB Bulk and Isoc streaming example code.
+   5          //
+   6          // Copyright (c) 2011, Cypress Semiconductor Corporation All rights reserved
+   7          //
+   8          // This software is owned by Cypress Semiconductor Corporation
+   9          // (Cypress) and is protected by United States copyright laws and
+  10          // international treaty provisions.  Therefore, unless otherwise specified in a
+  11          // separate license agreement, you must treat this
+  12          // software like any other copyrighted material.  Reproduction, modification, translation,
+  13          // compilation, or representation of this software in any other form
+  14          // (e.g., paper, magnetic, optical, silicon, etc.) is prohibited
+  15          // without the express written permission of Cypress.
+  16          //
+  17          // Disclaimer: Cypress makes no warranty of any kind, express or implied, with
+  18          // regard to this material, including, but not limited to, the implied warranties
+  19          // of merchantability and fitness for a particular purpose. Cypress reserves the
+  20          // right to make changes without further notice to the materials described
+  21          // herein. Cypress does not assume any liability arising out of the application
+  22          // or use of any product or circuit described herein. Cypress’ products described
+  23          // herein are not authorized for use as components in life-support devices.
+  24          //
+  25          // This software is protected by and subject to worldwide patent
+  26          // coverage, including U.S. and foreign patents. Use may be limited by
+  27          // and subject to the Cypress Software License Agreement.
+  28          //
+  29          //-----------------------------------------------------------------------------
+  30          #include "..\inc\fx2.h"
+  31          #include "..\inc\fx2regs.h"
+  32          #include "..\inc\fx2sdly.h"            // SYNCDELAY macro
+  33          
+  34          extern BOOL   GotSUD;         // Received setup data flag
+  35          extern BOOL   Sleep;
+  36          extern BOOL   Rwuen;
+  37          extern BOOL   Selfpwr;
+  38          
+  39          #define LED_ADDR		0x21
+  40          
+  41          enum {
+  42              Alt0_BulkIN = 0,
+  43              Alt1_BulkOUT,
+  44              Alt2_BulkINOUT,
+  45              Alt3_IsocIN,
+  46              Alt4_IsocOUT,
+  47              Alt5_IsocIN,
+  48              Alt6_IsocINOUT
+  49          };
+  50          
+  51          enum {
+  52              Full_Alt0_BulkIN = 0,
+  53              Full_Alt1_BulkOUT,
+  54              Full_Alt2_IsocIN,
+  55              Full_Alt3_IsocOUT
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 2   
+
+  56          };
+  57          
+  58          BYTE xdata Digit[] = { 0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x98, 0x88, 0x83, 0xc6, 0xa1,
+             - 0x86, 0x8e };
+  59          
+  60          BYTE    Configuration;      // Current configuration
+  61          BYTE    AlternateSetting = Alt0_BulkIN;   // Alternate settings
+  62          
+  63          
+  64          //-----------------------------------------------------------------------------
+  65          // Task Dispatcher hooks
+  66          //   The following hooks are called by the task dispatcher.
+  67          //-----------------------------------------------------------------------------
+  68          
+  69          WORD mycount;
+  70          
+  71          void TD_Init(void)             // Called once at startup
+  72          {
+  73   1         int i,j;
+  74   1      
+  75   1         // set the CPU clock to 48MHz
+  76   1         CPUCS = ((CPUCS & ~bmCLKSPD) | bmCLKSPD1) ;
+  77   1         SYNCDELAY;
+  78   1      
+  79   1         // set the slave FIFO interface to 48MHz
+  80   1         IFCONFIG |= 0x40;
+  81   1         SYNCDELAY;
+  82   1      
+  83   1          // Default interface uses endpoint 2, zero the valid bit on all others
+  84   1          // Just using endpoint 2, zero the valid bit on all others
+  85   1          EP1OUTCFG = (EP1OUTCFG & 0x7F);
+  86   1      	SYNCDELAY;
+  87   1      	EP1INCFG = (EP1INCFG & 0x7F);
+  88   1      	SYNCDELAY;
+  89   1      	EP4CFG = (EP4CFG & 0x7F);
+  90   1      	SYNCDELAY;
+  91   1      	EP6CFG = (EP6CFG & 0x7F);
+  92   1      	SYNCDELAY;
+  93   1      	EP8CFG = (EP8CFG & 0x7F);
+  94   1      	SYNCDELAY;
+  95   1          EP2CFG = 0xE0;  // EP2 is DIR=IN, TYPE=BULK, SIZE=512, BUF=4x
+  96   1      
+  97   1         // We want to get SOF interrupts
+  98   1         USBIE |= bmSOF;
+  99   1         
+ 100   1         mycount = 0;
+ 101   1      
+ 102   1         // Prepare data
+ 103   1         for (i=1;i<5;i++)
+ 104   1         {
+ 105   2            EP2FIFOBUF[0] = LSB(mycount);
+ 106   2            EP2FIFOBUF[1] = MSB(mycount);
+ 107   2            EP2FIFOBUF[2] = USBFRAMEL;
+ 108   2            EP2FIFOBUF[3] = USBFRAMEH;
+ 109   2            EP2FIFOBUF[4] = MICROFRAME;
+ 110   2            for (j=5;j<1024;j++)
+ 111   2            {
+ 112   3               EP2FIFOBUF[j] = i;
+ 113   3            }
+ 114   2            EP2BCH = 0x02;
+ 115   2            EP2BCL = 0x00;
+ 116   2         }
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 3   
+
+ 117   1      
+ 118   1      
+ 119   1          Rwuen = TRUE;                 // Enable remote-wakeup
+ 120   1      }
+ 121          
+ 122          void TD_Poll(void)             // Called repeatedly while the device is idle
+ 123          {  
+ 124   1      	// ...FX2 in high speed mode
+ 125   1      	if( EZUSB_HIGHSPEED( ) )
+ 126   1      	{ 
+ 127   2      	    // Perform USB activity based upon the Alt. Interface selected 
+ 128   2      	     switch (AlternateSetting)
+ 129   2      	    {
+ 130   3      	        case Alt0_BulkIN:
+ 131   3      	            // Send data on EP2
+ 132   3      	            while(!(EP2468STAT & bmEP2FULL))
+ 133   3      	            {
+ 134   4      	                EP2FIFOBUF[0] = LSB(mycount);
+ 135   4      	                EP2FIFOBUF[1] = MSB(mycount);
+ 136   4      	                EP2FIFOBUF[2] = USBFRAMEL;
+ 137   4      	                EP2FIFOBUF[3] = USBFRAMEH;
+ 138   4      	                EP2FIFOBUF[4] = MICROFRAME;
+ 139   4      	
+ 140   4      	                EP2BCH = 0x02;
+ 141   4      	                EP2BCL = 0x00;
+ 142   4      	
+ 143   4      	                mycount++;
+ 144   4      	            }
+ 145   3      	        break;
+ 146   3      	
+ 147   3      	        case Alt2_BulkINOUT:
+ 148   3      	            // Send data on EP2
+ 149   3      	            while(!(EP2468STAT & bmEP2FULL))
+ 150   3      	            {
+ 151   4      	                EP2FIFOBUF[0] = LSB(mycount);
+ 152   4      	                EP2FIFOBUF[1] = MSB(mycount);
+ 153   4      	                EP2FIFOBUF[2] = USBFRAMEL;
+ 154   4      	                EP2FIFOBUF[3] = USBFRAMEH;
+ 155   4      	                EP2FIFOBUF[4] = MICROFRAME;
+ 156   4      	
+ 157   4      	                EP2BCH = 0x02;
+ 158   4      	                EP2BCL = 0x00;
+ 159   4      	
+ 160   4      	                mycount++;
+ 161   4      	            }
+ 162   3      	
+ 163   3      	            // check EP6 EMPTY(busy) bit in EP2468STAT (SFR), core set's this bit when FIFO is empty
+ 164   3      	            if(!(EP2468STAT & bmEP6EMPTY))
+ 165   3      	            { 
+ 166   4      	                EP6BCL = 0x80;          // re(arm) EP6OUT
+ 167   4      	            }
+ 168   3      	        break;
+ 169   3      	
+ 170   3      	        case Alt3_IsocIN:
+ 171   3      	        case Alt5_IsocIN:
+ 172   3      	            // Send data on EP2
+ 173   3      	            while(!(EP2468STAT & bmEP2FULL))
+ 174   3      	            {
+ 175   4      	                EP2FIFOBUF[0] = LSB(mycount);
+ 176   4      	                EP2FIFOBUF[1] = MSB(mycount);
+ 177   4      	                EP2FIFOBUF[2] = USBFRAMEL;
+ 178   4      	                EP2FIFOBUF[3] = USBFRAMEH;
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 4   
+
+ 179   4      	                EP2FIFOBUF[4] = MICROFRAME;
+ 180   4      	
+ 181   4      	                EP2BCH = 0x04;
+ 182   4      	                EP2BCL = 0x00;
+ 183   4      	
+ 184   4      	                mycount++;
+ 185   4      	            }
+ 186   3      	        break;
+ 187   3      	
+ 188   3      	
+ 189   3      	        case Alt1_BulkOUT:
+ 190   3      	        case Alt4_IsocOUT:
+ 191   3      	            // check EP2 EMPTY(busy) bit in EP2468STAT (SFR), core set's this bit when FIFO is empty
+ 192   3      	            if(!(EP2468STAT & bmEP2EMPTY))
+ 193   3      	            { 
+ 194   4      	                EP2BCL = 0x80;          // re(arm) EP2OUT
+ 195   4      	            }
+ 196   3      	        break;
+ 197   3      	
+ 198   3      	        case Alt6_IsocINOUT:
+ 199   3      	        {
+ 200   4      	            // Send data on EP2
+ 201   4      	            while(!(EP2468STAT & bmEP2FULL))
+ 202   4      	            {
+ 203   5      	                EP2FIFOBUF[0] = LSB(mycount);
+ 204   5      	                EP2FIFOBUF[1] = MSB(mycount);
+ 205   5      	                EP2FIFOBUF[2] = USBFRAMEL;
+ 206   5      	                EP2FIFOBUF[3] = USBFRAMEH;
+ 207   5      	                EP2FIFOBUF[4] = MICROFRAME;
+ 208   5      	
+ 209   5      	                EP2BCH = 0x04;
+ 210   5      	                EP2BCL = 0x00;
+ 211   5      	
+ 212   5      	                mycount++;
+ 213   5      	            }
+ 214   4      	
+ 215   4      	            // check EP6 EMPTY(busy) bit in EP2468STAT (SFR), core set's this bit when FIFO is empty
+ 216   4      	            if(!(EP2468STAT & bmEP6EMPTY))
+ 217   4      	            { 
+ 218   5      	                EP6BCL = 0x80;          // re(arm) EP6OUT
+ 219   5      	            }
+ 220   4      	        }
+ 221   3      	        break;
+ 222   3      	   }
+ 223   2      	   
+ 224   2      	}
+ 225   1      	else	// Full Speed
+ 226   1      	{
+ 227   2      	    // Perform USB activity based upon the Alt. Interface selected 
+ 228   2      	     switch (AlternateSetting)
+ 229   2      	    {
+ 230   3      	        case Full_Alt0_BulkIN:
+ 231   3      	            // Send data on EP2
+ 232   3      	            while(!(EP2468STAT & bmEP2FULL))
+ 233   3      	            {
+ 234   4      	                EP2FIFOBUF[0] = LSB(mycount);
+ 235   4      	                EP2FIFOBUF[1] = MSB(mycount);
+ 236   4      	                EP2FIFOBUF[2] = USBFRAMEL;
+ 237   4      	                EP2FIFOBUF[3] = USBFRAMEH;
+ 238   4      	                EP2FIFOBUF[4] = MICROFRAME;
+ 239   4      	
+ 240   4      	                EP2BCH = 0x00;
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 5   
+
+ 241   4      	                EP2BCL = 0x40;
+ 242   4      	
+ 243   4      	                mycount++;
+ 244   4      	            }
+ 245   3      	        break;
+ 246   3      	
+ 247   3      	        case Full_Alt1_BulkOUT:	
+ 248   3      	            // check EP2 EMPTY(busy) bit in EP2468STAT (SFR), core set's this bit when FIFO is empty
+ 249   3      	            while(!(EP2468STAT & bmEP2EMPTY))
+ 250   3      	            { 
+ 251   4      	                EP2BCL = 0x80;          // re(arm) EP2OUT
+ 252   4      	            }
+ 253   3      	        break;
+ 254   3      	
+ 255   3      	        case Full_Alt2_IsocIN:
+ 256   3      	            // Send data on EP2
+ 257   3      	            while(!(EP2468STAT & bmEP2FULL))
+ 258   3      	            {
+ 259   4      	                EP2FIFOBUF[0] = LSB(mycount);
+ 260   4      	                EP2FIFOBUF[1] = MSB(mycount);
+ 261   4      	                EP2FIFOBUF[2] = USBFRAMEL;
+ 262   4      	                EP2FIFOBUF[3] = USBFRAMEH;
+ 263   4      	                EP2FIFOBUF[4] = MICROFRAME;
+ 264   4      	
+ 265   4      	                EP2BCH = 0x03;	// 1023
+ 266   4      	                EP2BCL = 0xFF;
+ 267   4      	
+ 268   4      	                mycount++;
+ 269   4      	            }
+ 270   3      	        break;
+ 271   3      	
+ 272   3      	        case Full_Alt3_IsocOUT:
+ 273   3      	            // check EP2 EMPTY(busy) bit in EP2468STAT (SFR), core set's this bit when FIFO is empty
+ 274   3      	            while(!(EP2468STAT & bmEP2EMPTY))
+ 275   3      	            { 
+ 276   4      	                EP2BCL = 0x80;          // re(arm) EP2OUT
+ 277   4      	            }
+ 278   3      	        break;
+ 279   3      	   }	
+ 280   2      	}
+ 281   1      }
+ 282          
+ 283          
+ 284          
+ 285          
+ 286          BOOL TD_Suspend(void)          // Called before the device goes into suspend mode
+ 287          {
+ 288   1         return(TRUE);
+ 289   1      }
+ 290          
+ 291          BOOL TD_Resume(void)          // Called after the device resumes
+ 292          {
+ 293   1         return(TRUE);
+ 294   1      }
+ 295          
+ 296          //-----------------------------------------------------------------------------
+ 297          // Device Request hooks
+ 298          //   The following hooks are called by the end point 0 device request parser.
+ 299          //-----------------------------------------------------------------------------
+ 300          
+ 301          BOOL DR_GetDescriptor(void)
+ 302          {
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 6   
+
+ 303   1         return(TRUE);
+ 304   1      }
+ 305          
+ 306          BOOL DR_SetConfiguration(void)   // Called when a Set Configuration command is received
+ 307          {
+ 308   1         Configuration = SETUPDAT[2];
+ 309   1         return(TRUE);            // Handled by user code
+ 310   1      }
+ 311          
+ 312          BOOL DR_GetConfiguration(void)   // Called when a Get Configuration command is received
+ 313          {
+ 314   1         EP0BUF[0] = Configuration;
+ 315   1         EP0BCH = 0;
+ 316   1         EP0BCL = 1;
+ 317   1         return(TRUE);            // Handled by user code
+ 318   1      }
+ 319          
+ 320          BOOL DR_SetInterface(void)       // Called when a Set Interface command is received
+ 321          {
+ 322   1          BYTE	updateDisplay = TRUE;
+ 323   1          AlternateSetting = SETUPDAT[2];
+ 324   1      
+ 325   1      	// ...FX2 in high speed mode
+ 326   1      	if( EZUSB_HIGHSPEED( ) )
+ 327   1      	{ 
+ 328   2      	    // Change configuration based upon the Alt. Interface selected 
+ 329   2      	    switch (AlternateSetting)
+ 330   2      	    {
+ 331   3      	        case Alt0_BulkIN:
+ 332   3      	            // Only using endpoint 2, zero the valid bit on all others
+ 333   3      	            // Just using endpoint 2, zero the valid bit on all others
+ 334   3      	            EP2CFG = 0xE0;  // EP2 is DIR=IN, TYPE=BULK, SIZE=512, BUF=4x
+ 335   3      	            SYNCDELAY;
+ 336   3      	
+ 337   3      	            EP1OUTCFG = (EP1OUTCFG & 0x7F);
+ 338   3      	        	SYNCDELAY;
+ 339   3      	        	EP1INCFG = (EP1INCFG & 0x7F);
+ 340   3      	        	SYNCDELAY;
+ 341   3      	        	EP4CFG = (EP4CFG & 0x7F);
+ 342   3      	        	SYNCDELAY;
+ 343   3      	        	EP6CFG = (EP6CFG & 0x7F);
+ 344   3      	        	SYNCDELAY;
+ 345   3      	        	EP8CFG = (EP8CFG & 0x7F);
+ 346   3      	        	SYNCDELAY;
+ 347   3      	
+ 348   3      	            // Clear out any committed packets
+ 349   3      	            FIFORESET = 0x80;
+ 350   3      	            SYNCDELAY;
+ 351   3      	            FIFORESET = 0x02;
+ 352   3      	            SYNCDELAY;
+ 353   3      	            FIFORESET = 0x00;
+ 354   3      	            SYNCDELAY;
+ 355   3      	
+ 356   3      	            // Reset data toggle to 0
+ 357   3      	            TOGCTL = 0x12;  // EP2 IN
+ 358   3      	            TOGCTL = 0x32;  // EP2 IN Reset
+ 359   3      	
+ 360   3      	        break;
+ 361   3      	
+ 362   3      	        case Alt1_BulkOUT:
+ 363   3      	            // Only using endpoint 2, zero the valid bit on all others
+ 364   3      	            EP2CFG = 0xA0;  // EP2 is DIR=OUT, TYPE=BULK, SIZE=512, BUF=4x
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 7   
+
+ 365   3      	            SYNCDELAY;
+ 366   3      	
+ 367   3      	            EP1OUTCFG = (EP1OUTCFG & 0x7F);
+ 368   3      	        	SYNCDELAY;
+ 369   3      	        	EP1INCFG = (EP1INCFG & 0x7F);
+ 370   3      	        	SYNCDELAY;
+ 371   3      	        	EP4CFG = (EP4CFG & 0x7F);
+ 372   3      	        	SYNCDELAY;
+ 373   3      	        	EP6CFG = (EP6CFG & 0x7F);
+ 374   3      	        	SYNCDELAY;
+ 375   3      	        	EP8CFG = (EP8CFG & 0x7F);
+ 376   3      	        	SYNCDELAY;
+ 377   3      	           
+ 378   3      	            // OUT endpoints do NOT come up armed
+ 379   3      	            EP2BCL = 0x80; // arm first buffer by writing BC w/skip=1
+ 380   3      	            SYNCDELAY;
+ 381   3      	            EP2BCL = 0x80; // arm second buffer by writing BC w/skip=1
+ 382   3      	            SYNCDELAY;
+ 383   3      	            EP2BCL = 0x80; // arm third buffer by writing BC w/skip=1
+ 384   3      	            SYNCDELAY;
+ 385   3      	            EP2BCL = 0x80; // arm fourth buffer by writing BC w/skip=1
+ 386   3      	            
+ 387   3      	        break;
+ 388   3      	
+ 389   3      	        case Alt2_BulkINOUT:
+ 390   3      	            // Using endpoints 2 & 6, zero the valid bit on all others
+ 391   3      	            EP2CFG = 0xE0; // EP2 is DIR=IN, TYPE=BULK, SIZE=512, BUF=4x
+ 392   3      	        	SYNCDELAY;
+ 393   3      	            EP6CFG = 0xA0; // EP6 is DIR=OUT, TYPE=BULK, SIZE=512, BUF=4x   
+ 394   3      	        	SYNCDELAY;
+ 395   3      	            
+ 396   3      	            EP1OUTCFG = (EP1OUTCFG & 0x7F);
+ 397   3      	        	SYNCDELAY;
+ 398   3      	        	EP1INCFG = (EP1INCFG & 0x7F);
+ 399   3      	        	SYNCDELAY;
+ 400   3      	        	EP4CFG = (EP4CFG & 0x7F);
+ 401   3      	        	SYNCDELAY;
+ 402   3      	        	EP8CFG = (EP8CFG & 0x7F);
+ 403   3      	        	SYNCDELAY;
+ 404   3      	
+ 405   3      	            // Clear out any committed packets
+ 406   3      	            FIFORESET = 0x80;
+ 407   3      	            SYNCDELAY;
+ 408   3      	            FIFORESET = 0x02;
+ 409   3      	            SYNCDELAY;
+ 410   3      	            FIFORESET = 0x00;
+ 411   3      	            SYNCDELAY;
+ 412   3      	
+ 413   3      	            // Reset data toggle to 0
+ 414   3      	            TOGCTL = 0x12;  // EP2 IN
+ 415   3      	            TOGCTL = 0x32;  // EP2 IN Reset
+ 416   3      	
+ 417   3      	            // OUT endpoints do NOT come up armed
+ 418   3      	            EP6BCL = 0x80; // arm first buffer by writing BC w/skip=1
+ 419   3      	            SYNCDELAY;
+ 420   3      	            EP6BCL = 0x80; // arm second buffer by writing BC w/skip=1
+ 421   3      	        	SYNCDELAY;
+ 422   3      	        break;
+ 423   3      	
+ 424   3      	        case Alt3_IsocIN:
+ 425   3      	            // Only using endpoint 2, zero the valid bit on all others
+ 426   3      	            EP2CFG = 0xD8;  // EP2 is DIR=IN, TYPE=ISOC, SIZE=1024, BUF=4x
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 8   
+
+ 427   3      	            SYNCDELAY;
+ 428   3      	            
+ 429   3      	            EP1OUTCFG = EP1INCFG = EP4CFG = EP6CFG = EP8CFG = 0x00; 
+ 430   3      	            SYNCDELAY;
+ 431   3      	
+ 432   3      	            // Clear out any committed packets
+ 433   3      	            FIFORESET = 0x80;
+ 434   3      	            SYNCDELAY;
+ 435   3      	            FIFORESET = 0x02;
+ 436   3      	            SYNCDELAY;
+ 437   3      	            FIFORESET = 0x00;
+ 438   3      	            SYNCDELAY;
+ 439   3      	
+ 440   3      	            // This register sets the number of Isoc packets to send per
+ 441   3      	            // uFrame.  This register is only valid in high speed.
+ 442   3      	            EP2ISOINPKTS = 0x03;
+ 443   3      	
+ 444   3      	        break;
+ 445   3      	
+ 446   3      	        case Alt4_IsocOUT:
+ 447   3      	        {
+ 448   4      	            // Only using endpoint 2, zero the valid bit on all others
+ 449   4      	            EP1OUTCFG = EP1INCFG = EP4CFG = EP6CFG = EP8CFG = 0x00; 
+ 450   4      	            SYNCDELAY;
+ 451   4      	            EP2CFG = 0x98;  // EP2 is DIR=OUT, TYPE=ISOC, SIZE=1024, BUF=4x
+ 452   4      	            SYNCDELAY;
+ 453   4      	
+ 454   4      	            // OUT endpoints do NOT come up armed
+ 455   4      	            EP2BCL = 0x80; // arm first buffer by writing BC w/skip=1
+ 456   4      	            SYNCDELAY;
+ 457   4      	            EP2BCL = 0x80; // arm second buffer by writing BC w/skip=1        break;
+ 458   4      	
+ 459   4      	        }
+ 460   3      	        break;
+ 461   3      	
+ 462   3      	        case Alt5_IsocIN:
+ 463   3      	        {
+ 464   4      	            // Only using endpoint 2, zero the valid bit on all others
+ 465   4      	            EP2CFG = 0xD8;  // EP2 is DIR=IN, TYPE=ISOC, SIZE=1024, BUF=4x
+ 466   4      	            SYNCDELAY;
+ 467   4      	
+ 468   4      	            EP1OUTCFG = EP1INCFG = EP4CFG = EP6CFG = EP8CFG = 0x00; 
+ 469   4      	            SYNCDELAY;
+ 470   4      	
+ 471   4      	            // Clear out any committed packets
+ 472   4      	            FIFORESET = 0x80;
+ 473   4      	            SYNCDELAY;
+ 474   4      	            FIFORESET = 0x02;
+ 475   4      	            SYNCDELAY;
+ 476   4      	            FIFORESET = 0x00;
+ 477   4      	            SYNCDELAY;
+ 478   4      	
+ 479   4      	            // This register sets the number of Isoc packets to send per
+ 480   4      	            // uFrame.  This register is only valid in high speed.
+ 481   4      	            EP2ISOINPKTS = 0x01;
+ 482   4      	        }
+ 483   3      	        break;
+ 484   3      	
+ 485   3      	        case Alt6_IsocINOUT:
+ 486   3      	        {
+ 487   4      	            // Using endpoints 2 & 6, zero the valid bit on all others
+ 488   4      	            EP2CFG = 0xDA; // EP2 is DIR=IN, TYPE=ISOC, SIZE=1024, BUF=2x
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 9   
+
+ 489   4      	            SYNCDELAY;
+ 490   4      	            EP6CFG = 0x9A; // EP6 is DIR=OUT, TYPE=ISOC, SIZE=1024, BUF=2x   
+ 491   4      	            SYNCDELAY;
+ 492   4      	
+ 493   4      	            EP1OUTCFG = EP1INCFG = EP4CFG = EP8CFG = 0x00; 
+ 494   4      	            SYNCDELAY;
+ 495   4      	
+ 496   4      	            // Clear out any committed packets
+ 497   4      	            FIFORESET = 0x80;
+ 498   4      	            SYNCDELAY;
+ 499   4      	            FIFORESET = 0x02;
+ 500   4      	            SYNCDELAY;
+ 501   4      	            FIFORESET = 0x00;
+ 502   4      	            SYNCDELAY;
+ 503   4      	
+ 504   4      	            // This register sets the number of Isoc packets to send per
+ 505   4      	            // uFrame.  This register is only valid in high speed.
+ 506   4      	            EP2ISOINPKTS = 0x01;
+ 507   4      	
+ 508   4      	            // OUT endpoints do NOT come up armed
+ 509   4      	            EP6BCL = 0x80; // arm first buffer by writing BC w/skip=1
+ 510   4      	            SYNCDELAY;
+ 511   4      	            EP6BCL = 0x80; // arm second buffer by writing BC w/skip=1
+ 512   4      	 
+ 513   4      	        }
+ 514   3      	        break;
+ 515   3      
+ 516   3      	    }
+ 517   2      	}
+ 518   1          else
+ 519   1          {
+ 520   2      	    // Change configuration based upon the Alt. Interface selected 
+ 521   2      	    switch (AlternateSetting)
+ 522   2      	    {
+ 523   3      	        case Full_Alt0_BulkIN:
+ 524   3      	            // Only using endpoint 2, zero the valid bit on all others
+ 525   3      	            // Just using endpoint 2, zero the valid bit on all others
+ 526   3      	            EP2CFG = 0xE0;  // EP2 is DIR=IN, TYPE=BULK, SIZE=512, BUF=4x
+ 527   3      	            SYNCDELAY;
+ 528   3      	
+ 529   3      	            EP1OUTCFG = (EP1OUTCFG & 0x7F);
+ 530   3      	        	SYNCDELAY;
+ 531   3      	        	EP1INCFG = (EP1INCFG & 0x7F);
+ 532   3      	        	SYNCDELAY;
+ 533   3      	        	EP4CFG = (EP4CFG & 0x7F);
+ 534   3      	        	SYNCDELAY;
+ 535   3      	        	EP6CFG = (EP6CFG & 0x7F);
+ 536   3      	        	SYNCDELAY;
+ 537   3      	        	EP8CFG = (EP8CFG & 0x7F);
+ 538   3      	        	SYNCDELAY;
+ 539   3      	
+ 540   3      	            // Clear out any committed packets
+ 541   3      	            FIFORESET = 0x80;
+ 542   3      	            SYNCDELAY;
+ 543   3      	            FIFORESET = 0x02;
+ 544   3      	            SYNCDELAY;
+ 545   3      	            FIFORESET = 0x00;
+ 546   3      	            SYNCDELAY;
+ 547   3      	
+ 548   3      	            // Reset data toggle to 0
+ 549   3      	            TOGCTL = 0x12;  // EP2 IN
+ 550   3      	            TOGCTL = 0x32;  // EP2 IN Reset
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 10  
+
+ 551   3      	
+ 552   3      	        break;
+ 553   3      	
+ 554   3      	        case Full_Alt1_BulkOUT:
+ 555   3      	            // Only using endpoint 2, zero the valid bit on all others
+ 556   3      	            EP2CFG = 0xA0;  // EP2 is DIR=OUT, TYPE=BULK, SIZE=512, BUF=4x
+ 557   3      	            SYNCDELAY;
+ 558   3      	
+ 559   3      	            EP1OUTCFG = (EP1OUTCFG & 0x7F);
+ 560   3      	        	SYNCDELAY;
+ 561   3      	        	EP1INCFG = (EP1INCFG & 0x7F);
+ 562   3      	        	SYNCDELAY;
+ 563   3      	        	EP4CFG = (EP4CFG & 0x7F);
+ 564   3      	        	SYNCDELAY;
+ 565   3      	        	EP6CFG = (EP6CFG & 0x7F);
+ 566   3      	        	SYNCDELAY;
+ 567   3      	        	EP8CFG = (EP8CFG & 0x7F);
+ 568   3      	        	SYNCDELAY;
+ 569   3      	           
+ 570   3      	            // OUT endpoints do NOT come up armed
+ 571   3      	            EP2BCL = 0x80; // arm first buffer by writing BC w/skip=1
+ 572   3      	            SYNCDELAY;
+ 573   3      	            EP2BCL = 0x80; // arm second buffer by writing BC w/skip=1
+ 574   3      	            SYNCDELAY;
+ 575   3      	            EP2BCL = 0x80; // arm third buffer by writing BC w/skip=1
+ 576   3      	            SYNCDELAY;
+ 577   3      	            EP2BCL = 0x80; // arm fourth buffer by writing BC w/skip=1
+ 578   3      	            
+ 579   3      	        break;
+ 580   3      	
+ 581   3      	
+ 582   3      	        case Full_Alt2_IsocIN:
+ 583   3      	            // Only using endpoint 2, zero the valid bit on all others
+ 584   3      	            EP2CFG = 0xD8;  // EP2 is DIR=IN, TYPE=ISOC, SIZE=1024, BUF=4x
+ 585   3      	            SYNCDELAY;
+ 586   3      	            
+ 587   3      	            EP1OUTCFG = EP1INCFG = EP4CFG = EP6CFG = EP8CFG = 0x00; 
+ 588   3      	            SYNCDELAY;
+ 589   3      	
+ 590   3      	            // Clear out any committed packets
+ 591   3      	            FIFORESET = 0x80;
+ 592   3      	            SYNCDELAY;
+ 593   3      	            FIFORESET = 0x02;
+ 594   3      	            SYNCDELAY;
+ 595   3      	            FIFORESET = 0x00;
+ 596   3      	            SYNCDELAY;
+ 597   3      		
+ 598   3      	        break;
+ 599   3      	
+ 600   3      	        case Full_Alt3_IsocOUT:
+ 601   3      	        {
+ 602   4      	            // Only using endpoint 2, zero the valid bit on all others
+ 603   4      	            EP1OUTCFG = EP1INCFG = EP4CFG = EP6CFG = EP8CFG = 0x00; 
+ 604   4      	            SYNCDELAY;
+ 605   4      	            EP2CFG = 0x98;  // EP2 is DIR=OUT, TYPE=ISOC, SIZE=1024, BUF=4x
+ 606   4      	            SYNCDELAY;
+ 607   4      	
+ 608   4      	            // OUT endpoints do NOT come up armed
+ 609   4      	            EP2BCL = 0x80; // arm first buffer by writing BC w/skip=1
+ 610   4      	            SYNCDELAY;
+ 611   4      	            EP2BCL = 0x80; // arm second buffer by writing BC w/skip=1        break;
+ 612   4      	
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 11  
+
+ 613   4      	        }
+ 614   3      	        break;	
+ 615   3      	
+ 616   3      	    }
+ 617   2      	}
+ 618   1      
+ 619   1         // Update the display to indicate the currently selected alt. Interface
+ 620   1      	if(updateDisplay)
+ 621   1      	{
+ 622   2      	   EZUSB_WriteI2C(LED_ADDR, 0x01, &(Digit[AlternateSetting]));
+ 623   2      	   EZUSB_WaitForEEPROMWrite(LED_ADDR);
+ 624   2      	   updateDisplay = FALSE;
+ 625   2      	}
+ 626   1      
+ 627   1         return(TRUE);            // Handled by user code
+ 628   1      }
+ 629          
+ 630          BOOL DR_GetInterface(void)       // Called when a Set Interface command is received
+ 631          {
+ 632   1         EP0BUF[0] = AlternateSetting;
+ 633   1         EP0BCH = 0;
+ 634   1         EP0BCL = 1;
+ 635   1         return(TRUE);            // Handled by user code
+ 636   1      }
+ 637          
+ 638          BOOL DR_GetStatus(void)
+ 639          {
+ 640   1         return(TRUE);
+ 641   1      }
+ 642          
+ 643          BOOL DR_ClearFeature(void)
+ 644          {
+ 645   1         return(TRUE);
+ 646   1      }
+ 647          
+ 648          BOOL DR_SetFeature(void)
+ 649          {
+ 650   1         return(TRUE);
+ 651   1      }
+ 652          
+ 653          BOOL DR_VendorCmnd(void)
+ 654          {
+ 655   1         return(TRUE);
+ 656   1      }
+ 657          
+ 658          //-----------------------------------------------------------------------------
+ 659          // USB Interrupt Handlers
+ 660          //   The following functions are called by the USB interrupt jump table.
+ 661          //-----------------------------------------------------------------------------
+ 662          
+ 663          // Setup Data Available Interrupt Handler
+ 664          void ISR_Sudav(void) interrupt 0
+ 665          {
+ 666   1         GotSUD = TRUE;            // Set flag
+ 667   1         EZUSB_IRQ_CLEAR();
+ 668   1         USBIRQ = bmSUDAV;         // Clear SUDAV IRQ
+ 669   1      }
+ 670          
+ 671          // Setup Token Interrupt Handler
+ 672          void ISR_Sutok(void) interrupt 0
+ 673          {
+ 674   1         EZUSB_IRQ_CLEAR();
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 12  
+
+ 675   1         USBIRQ = bmSUTOK;         // Clear SUTOK IRQ
+ 676   1      }
+ 677          
+ 678          void ISR_Sof(void) interrupt 0
+ 679          {
+ 680   1      
+ 681   1         EZUSB_IRQ_CLEAR();
+ 682   1         USBIRQ = bmSOF;            // Clear SOF IRQ
+ 683   1      }
+ 684          
+ 685          void ISR_Ures(void) interrupt 0
+ 686          {
+ 687   1          // Whenever we get a USB Reset, we should revert to full speed mode
+ 688   1          pConfigDscr = pFullSpeedConfigDscr;
+ 689   1          ((CONFIGDSCR xdata *) pConfigDscr)->type = CONFIG_DSCR;
+ 690   1          pOtherConfigDscr = pHighSpeedConfigDscr;
+ 691   1          ((CONFIGDSCR xdata *) pOtherConfigDscr)->type = OTHERSPEED_DSCR;
+ 692   1         
+ 693   1         EZUSB_IRQ_CLEAR();
+ 694   1         USBIRQ = bmURES;         // Clear URES IRQ
+ 695   1      }
+ 696          
+ 697          void ISR_Susp(void) interrupt 0
+ 698          {
+ 699   1         Sleep = TRUE;
+ 700   1         EZUSB_IRQ_CLEAR();
+ 701   1         USBIRQ = bmSUSP;
+ 702   1      }
+ 703          
+ 704          void ISR_Highspeed(void) interrupt 0
+ 705          {
+ 706   1         if (EZUSB_HIGHSPEED())
+ 707   1         {
+ 708   2            pConfigDscr = pHighSpeedConfigDscr;
+ 709   2            ((CONFIGDSCR xdata *) pConfigDscr)->type = CONFIG_DSCR;
+ 710   2            pOtherConfigDscr = pFullSpeedConfigDscr;
+ 711   2            ((CONFIGDSCR xdata *) pOtherConfigDscr)->type = OTHERSPEED_DSCR;
+ 712   2      
+ 713   2            // This register sets the number of Isoc packets to send per
+ 714   2            // uFrame.  This register is only valid in high speed.
+ 715   2            EP2ISOINPKTS = 0x03;
+ 716   2         }
+ 717   1         else
+ 718   1         {
+ 719   2            pConfigDscr = pFullSpeedConfigDscr;
+ 720   2            pOtherConfigDscr = pHighSpeedConfigDscr;
+ 721   2         }
+ 722   1      
+ 723   1         EZUSB_IRQ_CLEAR();
+ 724   1         USBIRQ = bmHSGRANT;
+ 725   1      }
+ 726          void ISR_Ep0ack(void) interrupt 0
+ 727          {
+ 728   1      }
+ 729          void ISR_Stub(void) interrupt 0
+ 730          {
+ 731   1      }
+ 732          void ISR_Ep0in(void) interrupt 0
+ 733          {
+ 734   1      }
+ 735          void ISR_Ep0out(void) interrupt 0
+ 736          {
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 13  
+
+ 737   1      }
+ 738          void ISR_Ep1in(void) interrupt 0
+ 739          {
+ 740   1      }
+ 741          void ISR_Ep1out(void) interrupt 0
+ 742          {
+ 743   1      }
+ 744          
+ 745          // ISR_Ep2inout is called on every OUT packet receieved.
+ 746          // We don't do anything with the data.  We just indicate we are done with the buffer.
+ 747          void ISR_Ep2inout(void) interrupt 0
+ 748          {
+ 749   1          // Perform USB activity based upon the Alt. Interface selected 
+ 750   1           switch (AlternateSetting)
+ 751   1          {
+ 752   2              case Alt1_BulkOUT:
+ 753   2              case Alt4_IsocOUT:
+ 754   2                 // check EP2 EMPTY(busy) bit in EP2468STAT (SFR), core set's this bit when FIFO is empty
+ 755   2                  if(!(EP2468STAT & bmEP2EMPTY))
+ 756   2                  { 
+ 757   3                      EP2BCL = 0x80;          // re(arm) EP2OUT
+ 758   3                  }
+ 759   2              break;
+ 760   2      
+ 761   2              case Alt2_BulkINOUT:
+ 762   2              case Alt6_IsocINOUT:
+ 763   2                  // check EP6 EMPTY(busy) bit in EP2468STAT (SFR), core set's this bit when FIFO is empty
+ 764   2                  if(!(EP2468STAT & bmEP6EMPTY))
+ 765   2                  { 
+ 766   3                      EP6BCL = 0x80;          // re(arm) EP6OUT
+ 767   3                  }
+ 768   2              break;
+ 769   2         }
+ 770   1      
+ 771   1      }
+ 772          void ISR_Ep4inout(void) interrupt 0
+ 773          {
+ 774   1      }
+ 775          void ISR_Ep6inout(void) interrupt 0
+ 776          {
+ 777   1      }
+ 778          void ISR_Ep8inout(void) interrupt 0
+ 779          {
+ 780   1      }
+ 781          void ISR_Ibn(void) interrupt 0
+ 782          {
+ 783   1      }
+ 784          void ISR_Ep0pingnak(void) interrupt 0
+ 785          {
+ 786   1      }
+ 787          void ISR_Ep1pingnak(void) interrupt 0
+ 788          {
+ 789   1      }
+ 790          void ISR_Ep2pingnak(void) interrupt 0
+ 791          {
+ 792   1      }
+ 793          void ISR_Ep4pingnak(void) interrupt 0
+ 794          {
+ 795   1      }
+ 796          void ISR_Ep6pingnak(void) interrupt 0
+ 797          {
+ 798   1      }
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 14  
+
+ 799          void ISR_Ep8pingnak(void) interrupt 0
+ 800          {
+ 801   1      }
+ 802          void ISR_Errorlimit(void) interrupt 0
+ 803          {
+ 804   1      }
+ 805          void ISR_Ep2piderror(void) interrupt 0
+ 806          {
+ 807   1      }
+ 808          void ISR_Ep4piderror(void) interrupt 0
+ 809          {
+ 810   1      }
+ 811          void ISR_Ep6piderror(void) interrupt 0
+ 812          {
+ 813   1      }
+ 814          void ISR_Ep8piderror(void) interrupt 0
+ 815          {
+ 816   1      }
+ 817          void ISR_Ep2pflag(void) interrupt 0
+ 818          {
+ 819   1      }
+ 820          void ISR_Ep4pflag(void) interrupt 0
+ 821          {
+ 822   1      }
+ 823          void ISR_Ep6pflag(void) interrupt 0
+ 824          {
+ 825   1      }
+ 826          void ISR_Ep8pflag(void) interrupt 0
+ 827          {
+ 828   1      }
+ 829          void ISR_Ep2eflag(void) interrupt 0
+ 830          {
+ 831   1      }
+ 832          void ISR_Ep4eflag(void) interrupt 0
+ 833          {
+ 834   1      }
+ 835          void ISR_Ep6eflag(void) interrupt 0
+ 836          {
+ 837   1      }
+ 838          void ISR_Ep8eflag(void) interrupt 0
+ 839          {
+ 840   1      }
+ 841          void ISR_Ep2fflag(void) interrupt 0
+ 842          {
+ 843   1      }
+ 844          void ISR_Ep4fflag(void) interrupt 0
+ 845          {
+ 846   1      }
+ 847          void ISR_Ep6fflag(void) interrupt 0
+ 848          {
+ 849   1      }
+ 850          void ISR_Ep8fflag(void) interrupt 0
+ 851          {
+ 852   1      }
+ 853          void ISR_GpifComplete(void) interrupt 0
+ 854          {
+ 855   1      }
+ 856          void ISR_GpifWaveform(void) interrupt 0
+ 857          {
+ 858   1      }
+
+
+C51 COMPILER V6.12  CYSTREAM                                                               11/22/2016 18:24:54 PAGE 15  
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1956    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     16    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

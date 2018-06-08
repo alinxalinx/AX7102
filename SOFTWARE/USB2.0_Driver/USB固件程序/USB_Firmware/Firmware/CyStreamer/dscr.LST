@@ -1,0 +1,469 @@
+A51 MACRO ASSEMBLER  DSCR                                                                 11/22/2016 18:24:54 PAGE     1
+
+
+MACRO ASSEMBLER A51 V6.12
+OBJECT MODULE PLACED IN .\dscr.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE .\dscr.a51 SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;;-----------------------------------------------------------------------------
+                       2     ;;   File:      dscr.a51
+                       3     ;;   Contents:   This file contains descriptor data tables.  
+                       4     ;;
+                       5     ;;   Copyright (c) 2003 Cypress Semiconductor, Inc. All rights reserved
+                       6     ;;-----------------------------------------------------------------------------
+                       7     
+                       8        
+  0001                 9     DSCR_DEVICE   equ   1   ;; Descriptor type: Device
+  0002                10     DSCR_CONFIG   equ   2   ;; Descriptor type: Configuration
+  0003                11     DSCR_STRING   equ   3   ;; Descriptor type: String
+  0004                12     DSCR_INTRFC   equ   4   ;; Descriptor type: Interface
+  0005                13     DSCR_ENDPNT   equ   5   ;; Descriptor type: Endpoint
+  0006                14     DSCR_DEVQUAL  equ   6   ;; Descriptor type: Device Qualifier
+                      15     
+  0012                16     DSCR_DEVICE_LEN   equ   18
+  0009                17     DSCR_CONFIG_LEN   equ    9
+  0009                18     DSCR_INTRFC_LEN   equ    9
+  0007                19     DSCR_ENDPNT_LEN   equ    7
+  000A                20     DSCR_DEVQUAL_LEN  equ   10
+                      21     
+  0000                22     ET_CONTROL   equ   0   ;; Endpoint type: Control
+  0001                23     ET_ISO       equ   1   ;; Endpoint type: Isochronous
+  0002                24     ET_BULK      equ   2   ;; Endpoint type: Bulk
+  0003                25     ET_INT       equ   3   ;; Endpoint type: Interrupt
+                      26     
+                      27     public      DeviceDscr, DeviceQualDscr, HighSpeedConfigDscr, FullSpeedConfigDscr, StringDsc
+                             r, UserDscr
+                      28     
+                      29     ;DSCR   SEGMENT   CODE
+                      30     
+                      31     ;;-----------------------------------------------------------------------------
+                      32     ;; Global Variables
+                      33     ;;-----------------------------------------------------------------------------
+                      34     ;      rseg DSCR     ;; locate the descriptor table in on-part memory.
+                      35     
+----                  36     CSEG   AT 100H
+                      37     
+                      38     
+0100                  39     DeviceDscr:   
+0100 12               40           db   DSCR_DEVICE_LEN      ;; Descriptor length
+0101 01               41           db   DSCR_DEVICE   ;; Decriptor type
+0102 0002             42           dw   0002H      ;; Specification Version (BCD)
+0104 00               43           db   00H        ;; Device class
+0105 00               44           db   00H         ;; Device sub-class
+0106 00               45           db   00H         ;; Device sub-sub-class
+0107 40               46           db   64         ;; Maximum packet size
+0108 B404             47           dw   0B404H      ;; Vendor ID
+010A 0310             48           dw   0310H      ;; Product ID (Sample Device)
+010C 0000             49           dw   0000H      ;; Product version ID
+010E 01               50           db   1         ;; Manufacturer string index
+010F 02               51           db   2         ;; Product string index
+0110 00               52           db   0         ;; Serial number string index
+0111 01               53           db   1         ;; Number of configurations
+                      54     
+0114                  55     org (($ / 2) +1) * 2
+                      56     
+0114                  57     DeviceQualDscr:
+A51 MACRO ASSEMBLER  DSCR                                                                 11/22/2016 18:24:54 PAGE     2
+
+0114 0A               58           db   DSCR_DEVQUAL_LEN   ;; Descriptor length
+0115 06               59           db   DSCR_DEVQUAL   ;; Decriptor type
+0116 0002             60           dw   0002H      ;; Specification Version (BCD)
+0118 00               61           db   00H        ;; Device class
+0119 00               62           db   00H         ;; Device sub-class
+011A 00               63           db   00H         ;; Device sub-sub-class
+011B 40               64           db   64         ;; Maximum packet size
+011C 01               65           db   1         ;; Number of configurations
+011D 00               66           db   0         ;; Reserved
+                      67     
+0120                  68     org (($ / 2) +1) * 2
+                      69     
+0120                  70     HighSpeedConfigDscr:   
+0120 09               71           db   DSCR_CONFIG_LEN               ;; Descriptor length
+0121 02               72           db   DSCR_CONFIG                  ;; Descriptor type
+0122 87               73           db   (HighSpeedConfigDscrEnd-HighSpeedConfigDscr) mod 256 ;; Total Length (LSB)
+0123 00               74           db   (HighSpeedConfigDscrEnd-HighSpeedConfigDscr)  /  256 ;; Total Length (MSB)
+0124 01               75           db   1      ;; Number of interfaces
+0125 01               76           db   1      ;; Configuration number
+0126 00               77           db   0      ;; Configuration string
+0127 A0               78           db   10100000b   ;; Attributes (b7 - buspwr, b6 - selfpwr, b5 - rwu)
+0128 32               79           db   50      ;; Power requirement (div 2 ma)
+                      80     
+                      81     ;; Alt Interface 0 Descriptor - Bulk IN
+0129 09               82           db   DSCR_INTRFC_LEN   ;; Descriptor length
+012A 04               83           db   DSCR_INTRFC       ;; Descriptor type
+012B 00               84           db   0                 ;; Zero-based index of this interface
+012C 00               85           db   0                 ;; Alternate setting
+012D 01               86           db   1                 ;; Number of end points 
+012E FF               87           db   0ffH              ;; Interface class
+012F 00               88           db   00H               ;; Interface sub class
+0130 00               89           db   00H               ;; Interface sub sub class
+0131 00               90           db   0                 ;; Interface descriptor string index This would be nice to add
+                             !
+                      91           
+                      92     ;; Bulk IN Endpoint Descriptor
+0132 07               93           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+0133 05               94           db   DSCR_ENDPNT       ;; Descriptor type
+0134 82               95           db   82H               ;; Endpoint 2 and direction IN
+0135 02               96           db   ET_BULK           ;; Endpoint type
+0136 00               97           db   00H               ;; Maximun packet size (LSB)
+0137 02               98           db   02H               ;; Max packect size (MSB)  512 byte packets/uFrame
+0138 00               99           db   00H               ;; Polling interval
+                     100     
+                     101     ;; Alt Interface 1 Descriptor - Bulk OUT
+0139 09              102           db   DSCR_INTRFC_LEN   ;; Descriptor length
+013A 04              103           db   DSCR_INTRFC       ;; Descriptor type
+013B 00              104           db   0                 ;; Zero-based index of this interface
+013C 01              105           db   1                 ;; Alternate setting
+013D 01              106           db   1                 ;; Number of end points 
+013E FF              107           db   0ffH              ;; Interface class
+013F 00              108           db   00H               ;; Interface sub class
+0140 00              109           db   00H               ;; Interface sub sub class
+0141 00              110           db   0                 ;; Interface descriptor string index This would be nice to add
+                             !
+                     111           
+                     112     ;; Bulk OUT Endpoint Descriptor
+0142 07              113           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+0143 05              114           db   DSCR_ENDPNT       ;; Descriptor type
+0144 02              115           db   2H                ;; Endpoint 2 and direction OUT
+0145 02              116           db   ET_BULK           ;; Endpoint type
+0146 00              117           db   00H               ;; Maximun packet size (LSB) 
+0147 02              118           db   02H               ;; Max packect size (MSB) 512 byte packets/uFrame
+0148 00              119           db   00H               ;; Polling interval
+                     120     
+                     121     ;; Alt Interface 2 Descriptor - Bulk IN-OUT
+A51 MACRO ASSEMBLER  DSCR                                                                 11/22/2016 18:24:54 PAGE     3
+
+0149 09              122           db   DSCR_INTRFC_LEN   ;; Descriptor length
+014A 04              123           db   DSCR_INTRFC       ;; Descriptor type
+014B 00              124           db   0                 ;; Zero-based index of this interface
+014C 02              125           db   2                 ;; Alternate setting
+014D 02              126           db   2                 ;; Number of end points 
+014E FF              127           db   0ffH              ;; Interface class
+014F 00              128           db   00H               ;; Interface sub class
+0150 00              129           db   00H               ;; Interface sub sub class
+0151 00              130           db   0                 ;; Interface descriptor string index This would be nice to add
+                             !
+                     131           
+                     132     ;; Bulk IN Endpoint Descriptor
+0152 07              133           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+0153 05              134           db   DSCR_ENDPNT       ;; Descriptor type
+0154 82              135           db   82H               ;; Endpoint 2 and direction IN
+0155 02              136           db   ET_BULK           ;; Endpoint type
+0156 00              137           db   00H               ;; Maximun packet size (LSB) 512 byte packets/uFrame
+0157 02              138           db   02H               ;; Max packect size (MSB)
+0158 00              139           db   00H               ;; Polling interval
+                     140     
+                     141     ;; Bulk OUT Endpoint Descriptor
+0159 07              142           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+015A 05              143           db   DSCR_ENDPNT       ;; Descriptor type
+015B 06              144           db   06H               ;; Endpoint 6 and direction OUT
+015C 02              145           db   ET_BULK           ;; Endpoint type
+015D 00              146           db   00H               ;; Maximun packet size (LSB) 
+015E 02              147           db   02H               ;; Max packect size (MSB) 512 byte packets/uFrame
+015F 00              148           db   00H               ;; Polling interval
+                     149     
+                     150     
+                     151     ;; Alt. Interface 3 Descriptor - Isoc IN 3x1024 byte packets/uFrame
+0160 09              152           db   DSCR_INTRFC_LEN   ;; Descriptor length
+0161 04              153           db   DSCR_INTRFC       ;; Descriptor type
+0162 00              154           db   0                 ;; Zero-based index of this interface
+0163 03              155           db   3                 ;; Alternate setting
+0164 01              156           db   1                 ;; Number of end points 
+0165 FF              157           db   0ffH              ;; Interface class
+0166 00              158           db   00H               ;; Interface sub class
+0167 00              159           db   00H               ;; Interface sub sub class
+0168 00              160           db   0                 ;; Interface descriptor string index. This would be nice to ad
+                             d!
+                     161     
+                     162     ;; Isoc IN Endpoint Descriptor 
+0169 07              163           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+016A 05              164           db   DSCR_ENDPNT       ;; Descriptor type
+016B 82              165           db   82H               ;; Endpoint 2 and direction IN
+016C 01              166           db   ET_ISO            ;; Endpoint type
+016D 00              167           db   00H               ;; Maximun packet size (LSB)
+016E 14              168           db   14H               ;; Max packect size (MSB) 10100b 3x1024 byte packets/uFrame
+016F 01              169           db   01H               ;; Polling interval
+                     170     
+                     171     ;; Alt. Interface 4 Descriptor - Isoc OUT 3x1024 byte packets/uFrame
+0170 09              172           db   DSCR_INTRFC_LEN   ;; Descriptor length
+0171 04              173           db   DSCR_INTRFC       ;; Descriptor type
+0172 00              174           db   0                 ;; Zero-based index of this interface
+0173 04              175           db   4                 ;; Alternate setting
+0174 01              176           db   1                 ;; Number of end points 
+0175 FF              177           db   0ffH              ;; Interface class
+0176 00              178           db   00H               ;; Interface sub class
+0177 00              179           db   00H               ;; Interface sub sub class
+0178 00              180           db   0                 ;; Interface descriptor string index This would be nice to add
+                             !
+                     181           
+                     182     ;; Isoc OUT Endpoint Descriptor
+0179 07              183           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+017A 05              184           db   DSCR_ENDPNT       ;; Descriptor type
+A51 MACRO ASSEMBLER  DSCR                                                                 11/22/2016 18:24:54 PAGE     4
+
+017B 02              185           db   02H               ;; Endpoint 2 and direction OUT
+017C 01              186           db   ET_ISO            ;; Endpoint type
+017D 00              187           db   00H               ;; Maximun packet size (LSB) 
+017E 14              188           db   14H               ;; Max packect size (MSB) 10100b 3x1024 byte packets/uFrame
+017F 01              189           db   01H               ;; Polling interval
+                     190     
+                     191     ;; Alt. Interface 5 Descriptor - Isoc IN 1x1024 byte packets/uFrame
+0180 09              192           db   DSCR_INTRFC_LEN   ;; Descriptor length
+0181 04              193           db   DSCR_INTRFC       ;; Descriptor type
+0182 00              194           db   0                 ;; Zero-based index of this interface
+0183 05              195           db   5                 ;; Alternate setting
+0184 01              196           db   1                 ;; Number of end points 
+0185 FF              197           db   0ffH              ;; Interface class
+0186 00              198           db   00H               ;; Interface sub class
+0187 00              199           db   00H               ;; Interface sub sub class
+0188 00              200           db   0                 ;; Interface descriptor string index. This would be nice to ad
+                             d!
+                     201     
+                     202     ;; Isoc IN Endpoint Descriptor
+0189 07              203           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+018A 05              204           db   DSCR_ENDPNT       ;; Descriptor type
+018B 82              205           db   82H               ;; Endpoint 2 and direction IN
+018C 01              206           db   ET_ISO            ;; Endpoint type
+018D 00              207           db   00H               ;; Maximun packet size (LSB) 
+018E 04              208           db   04H               ;; Max packect size (MSB) 00100b 1x1024 byte packets/uFrame
+018F 01              209           db   01H               ;; Polling interval
+                     210     
+                     211     ;; Alt. Interface 6 Descriptor - Isoc IN OUT 1x1024 byte packets/uFrame
+0190 09              212           db   DSCR_INTRFC_LEN   ;; Descriptor length
+0191 04              213           db   DSCR_INTRFC       ;; Descriptor type
+0192 00              214           db   0                 ;; Zero-based index of this interface
+0193 06              215           db   6                 ;; Alternate setting
+0194 02              216           db   2                 ;; Number of end points 
+0195 FF              217           db   0ffH              ;; Interface class
+0196 00              218           db   00H               ;; Interface sub class
+0197 00              219           db   00H               ;; Interface sub sub class
+0198 00              220           db   0                 ;; Interface descriptor string index. This would be nice to ad
+                             d!
+                     221     
+                     222     ;; Isoc IN Endpoint Descriptor
+0199 07              223           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+019A 05              224           db   DSCR_ENDPNT       ;; Descriptor type
+019B 82              225           db   82H               ;; Endpoint 2 and direction IN
+019C 01              226           db   ET_ISO            ;; Endpoint type
+019D 00              227           db   00H               ;; Maximun packet size (LSB) 
+019E 04              228           db   04H               ;; Max packect size (MSB) 00100b 1x1024 byte packets/uFrame
+019F 01              229           db   01H               ;; Polling interval
+                     230     
+                     231     ;; Isoc OUT Endpoint Descriptor
+01A0 07              232           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+01A1 05              233           db   DSCR_ENDPNT       ;; Descriptor type
+01A2 06              234           db   06H               ;; Endpoint 6 and direction OUT
+01A3 01              235           db   ET_ISO            ;; Endpoint type
+01A4 00              236           db   00H               ;; Maximun packet size (LSB) 
+01A5 04              237           db   04H               ;; Max packect size (MSB) 00100b 1x1024 byte packets/uFrame
+01A6 01              238           db   01H               ;; Polling interval
+                     239     
+                     240     
+                     241     
+01A7                 242     HighSpeedConfigDscrEnd:   
+                     243     
+                     244     
+                     245     
+01A8                 246     org (($ / 2) +1) * 2
+                     247     
+01A8                 248     FullSpeedConfigDscr:   
+A51 MACRO ASSEMBLER  DSCR                                                                 11/22/2016 18:24:54 PAGE     5
+
+01A8 09              249           db   DSCR_CONFIG_LEN               ;; Descriptor length
+01A9 02              250           db   DSCR_CONFIG                  ;; Descriptor type
+01AA 49              251           db   (FullSpeedConfigDscrEnd-FullSpeedConfigDscr) mod 256 ;; Total Length (LSB)
+01AB 00              252           db   (FullSpeedConfigDscrEnd-FullSpeedConfigDscr)  /  256 ;; Total Length (MSB)
+01AC 01              253           db   1      ;; Number of interfaces
+01AD 01              254           db   1      ;; Configuration number
+01AE 00              255           db   0      ;; Configuration string
+01AF A0              256           db   10100000b   ;; Attributes (b7 - buspwr, b6 - selfpwr, b5 - rwu)
+01B0 32              257           db   50      ;; Power requirement (div 2 ma)
+                     258     
+                     259     ;; Interface Descriptor
+01B1 09              260           db   DSCR_INTRFC_LEN      ;; Descriptor length
+01B2 04              261           db   DSCR_INTRFC         ;; Descriptor type
+01B3 00              262           db   0               ;; Zero-based index of this interface
+01B4 00              263           db   0               ;; Alternate setting
+01B5 01              264           db   1               ;; Number of end points 
+01B6 FF              265           db   0ffH            ;; Interface class
+01B7 00              266           db   00H               ;; Interface sub class
+01B8 00              267           db   00H               ;; Interface sub sub class
+01B9 00              268           db   0               ;; Interface descriptor string index
+                     269     
+                     270     ;; Endpoint Descriptor
+01BA 07              271           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+01BB 05              272           db   DSCR_ENDPNT       ;; Descriptor type
+01BC 82              273           db   82H               ;; Endpoint number, and direction
+01BD 02              274           db   ET_BULK            ;; Endpoint type
+01BE 40              275           db   040H               ;; Maximun packet size (LSB) 
+01BF 00              276           db   00H               ;; Max packect size (MSB)
+01C0 01              277           db   01H               ;; Polling interval
+                     278     
+                     279     ;; Alt. Interface 1 Descriptor
+01C1 09              280           db   DSCR_INTRFC_LEN      ;; Descriptor length
+01C2 04              281           db   DSCR_INTRFC         ;; Descriptor type
+01C3 00              282           db   0               ;; Zero-based index of this interface
+01C4 01              283           db   1               ;; Alternate setting
+01C5 01              284           db   1               ;; Number of end points 
+01C6 FF              285           db   0ffH            ;; Interface class
+01C7 00              286           db   00H               ;; Interface sub class
+01C8 00              287           db   00H               ;; Interface sub sub class
+01C9 00              288           db   0               ;; Interface descriptor string index
+                     289     
+                     290     ;; Endpoint Descriptor
+01CA 07              291           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+01CB 05              292           db   DSCR_ENDPNT       ;; Descriptor type
+01CC 02              293           db   02H               ;; Endpoint number, and direction
+01CD 02              294           db   ET_BULK            ;; Endpoint type
+01CE 40              295           db   040H               ;; Maximun packet size (LSB) 
+01CF 00              296           db   00H               ;; Max packect size (MSB)
+01D0 01              297           db   01H               ;; Polling interval
+                     298     
+                     299     
+                     300     ;; Alt. Interface 2 Descriptor
+01D1 09              301           db   DSCR_INTRFC_LEN   ;; Descriptor length
+01D2 04              302           db   DSCR_INTRFC       ;; Descriptor type
+01D3 00              303           db   0                 ;; Zero-based index of this interface
+01D4 02              304           db   2                 ;; Alternate setting
+01D5 01              305           db   1                 ;; Number of end points 
+01D6 FF              306           db   0ffH              ;; Interface class
+01D7 00              307           db   00H               ;; Interface sub class
+01D8 00              308           db   00H               ;; Interface sub sub class
+01D9 00              309           db   0                 ;; Interface descriptor string index. This would be nice to ad
+                             d!
+                     310     
+                     311     ;; Endpoint Descriptor
+01DA 07              312           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+01DB 05              313           db   DSCR_ENDPNT       ;; Descriptor type
+A51 MACRO ASSEMBLER  DSCR                                                                 11/22/2016 18:24:54 PAGE     6
+
+01DC 82              314           db   82H               ;; Endpoint number, and direction
+01DD 01              315           db   ET_ISO            ;; Endpoint type
+01DE FF              316           db   0FFH               ;; Maximun packet size (LSB) 
+01DF 03              317           db   03H               ;; Max packect size (MSB) 1023 byte packets/Frame
+01E0 01              318           db   01H               ;; Polling interval
+                     319     
+                     320     ;; Alt. Interface 3 Descriptor
+01E1 09              321           db   DSCR_INTRFC_LEN   ;; Descriptor length
+01E2 04              322           db   DSCR_INTRFC       ;; Descriptor type
+01E3 00              323           db   0                 ;; Zero-based index of this interface
+01E4 03              324           db   3                 ;; Alternate setting
+01E5 01              325           db   1                 ;; Number of end points 
+01E6 FF              326           db   0ffH              ;; Interface class
+01E7 00              327           db   00H               ;; Interface sub class
+01E8 00              328           db   00H               ;; Interface sub sub class
+01E9 00              329           db   0                 ;; Interface descriptor string index. This would be nice to ad
+                             d!
+                     330     
+                     331     ;; Endpoint Descriptor
+01EA 07              332           db   DSCR_ENDPNT_LEN   ;; Descriptor length
+01EB 05              333           db   DSCR_ENDPNT       ;; Descriptor type
+01EC 02              334           db   2H               ;; Endpoint number, and direction
+01ED 01              335           db   ET_ISO            ;; Endpoint type
+01EE FF              336           db   0FFH               ;; Maximun packet size (LSB) 
+01EF 03              337           db   03H               ;; Max packect size (MSB) 1023 byte packets/Frame
+01F0 01              338           db   01H               ;; Polling interval
+                     339     
+                     340     
+                     341           
+01F1                 342     FullSpeedConfigDscrEnd:   
+                     343     
+01F2                 344     org (($ / 2) +1) * 2
+                     345     
+01F2                 346     StringDscr:
+                     347     
+01F2                 348     StringDscr0:   
+01F2 04              349           db   StringDscr0End-StringDscr0      ;; String descriptor length
+01F3 03              350           db   DSCR_STRING
+01F4 0904            351           db   09H,04H
+01F6                 352     StringDscr0End:
+                     353     
+01F6                 354     StringDscr1:   
+01F6 10              355           db   StringDscr1End-StringDscr1      ;; String descriptor length
+01F7 03              356           db   DSCR_STRING
+01F8 4300            357           db   'C',00
+01FA 7900            358           db   'y',00
+01FC 7000            359           db   'p',00
+01FE 7200            360           db   'r',00
+0200 6500            361           db   'e',00
+0202 7300            362           db   's',00
+0204 7300            363           db   's',00
+0206                 364     StringDscr1End:
+                     365     
+0206                 366     StringDscr2:   
+0206 14              367           db   StringDscr2End-StringDscr2      ;; Descriptor length
+0207 03              368           db   DSCR_STRING
+0208 4300            369           db   'C',00
+020A 5900            370           db   'Y',00
+020C 2D00            371           db   '-',00
+020E 5300            372           db   'S',00
+0210 7400            373           db   't',00
+0212 7200            374           db   'r',00
+0214 6500            375           db   'e',00
+0216 6100            376           db   'a',00
+0218 6D00            377           db   'm',00
+021A                 378     StringDscr2End:
+A51 MACRO ASSEMBLER  DSCR                                                                 11/22/2016 18:24:54 PAGE     7
+
+                     379     
+                     380     
+                     381     
+                     382     
+                     383     
+                     384     
+                     385     
+                     386     
+                     387     
+                     388     
+                     389     
+                     390     
+                     391     
+021A                 392     UserDscr:      
+021A 0000            393           dw   0000H
+                     394           end
+                                   
+A51 MACRO ASSEMBLER  DSCR                                                                 11/22/2016 18:24:54 PAGE     8
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                 T Y P E  V A L U E   ATTRIBUTES
+
+DEVICEDSCR . . . . . .  C ADDR   0100H   A   
+DEVICEQUALDSCR . . . .  C ADDR   0114H   A   
+DSCR_CONFIG. . . . . .  N NUMB   0002H   A   
+DSCR_CONFIG_LEN. . . .  N NUMB   0009H   A   
+DSCR_DEVICE. . . . . .  N NUMB   0001H   A   
+DSCR_DEVICE_LEN. . . .  N NUMB   0012H   A   
+DSCR_DEVQUAL . . . . .  N NUMB   0006H   A   
+DSCR_DEVQUAL_LEN . . .  N NUMB   000AH   A   
+DSCR_ENDPNT. . . . . .  N NUMB   0005H   A   
+DSCR_ENDPNT_LEN. . . .  N NUMB   0007H   A   
+DSCR_INTRFC. . . . . .  N NUMB   0004H   A   
+DSCR_INTRFC_LEN. . . .  N NUMB   0009H   A   
+DSCR_STRING. . . . . .  N NUMB   0003H   A   
+ET_BULK. . . . . . . .  N NUMB   0002H   A   
+ET_CONTROL . . . . . .  N NUMB   0000H   A   
+ET_INT . . . . . . . .  N NUMB   0003H   A   
+ET_ISO . . . . . . . .  N NUMB   0001H   A   
+FULLSPEEDCONFIGDSCR. .  C ADDR   01A8H   A   
+FULLSPEEDCONFIGDSCREND  C ADDR   01F1H   A   
+HIGHSPEEDCONFIGDSCR. .  C ADDR   0120H   A   
+HIGHSPEEDCONFIGDSCREND  C ADDR   01A7H   A   
+STRINGDSCR . . . . . .  C ADDR   01F2H   A   
+STRINGDSCR0. . . . . .  C ADDR   01F2H   A   
+STRINGDSCR0END . . . .  C ADDR   01F6H   A   
+STRINGDSCR1. . . . . .  C ADDR   01F6H   A   
+STRINGDSCR1END . . . .  C ADDR   0206H   A   
+STRINGDSCR2. . . . . .  C ADDR   0206H   A   
+STRINGDSCR2END . . . .  C ADDR   021AH   A   
+USERDSCR . . . . . . .  C ADDR   021AH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
