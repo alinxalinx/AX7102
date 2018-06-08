@@ -1,0 +1,12 @@
+Language File-Name             IP   Library         File-Path                                                                            
+Verilog, gtp_tx_startup_fsm.v, gtp, xil_defaultlib, ../../../../gtp_example.srcs/sources_1/ip/gtp/gtp/example_design/gtp_tx_startup_fsm.v
+Verilog, gtp_rx_startup_fsm.v, gtp, xil_defaultlib, ../../../../gtp_example.srcs/sources_1/ip/gtp/gtp/example_design/gtp_rx_startup_fsm.v
+Verilog, gtp_init.v,           gtp, xil_defaultlib, ../../../../gtp_example.srcs/sources_1/ip/gtp/gtp_init.v                             
+Verilog, gtp_gt.v,             gtp, xil_defaultlib, ../../../../gtp_example.srcs/sources_1/ip/gtp/gtp_gt.v                               
+Verilog, gtp_multi_gt.v,       gtp, xil_defaultlib, ../../../../gtp_example.srcs/sources_1/ip/gtp/gtp_multi_gt.v                         
+Verilog, gtp_gtrxreset_seq.v,  gtp, xil_defaultlib, ../../../../gtp_example.srcs/sources_1/ip/gtp/gtp/example_design/gtp_gtrxreset_seq.v 
+Verilog, gtp_rxpmarst_seq.v,   gtp, xil_defaultlib, ../../../../gtp_example.srcs/sources_1/ip/gtp/gtp/example_design/gtp_rxpmarst_seq.v  
+Verilog, gtp_rxrate_seq.v,     gtp, xil_defaultlib, ../../../../gtp_example.srcs/sources_1/ip/gtp/gtp/example_design/gtp_rxrate_seq.v    
+Verilog, gtp_sync_block.v,     gtp, xil_defaultlib, ../../../../gtp_example.srcs/sources_1/ip/gtp/gtp/example_design/gtp_sync_block.v    
+Verilog, gtp.v,                gtp, xil_defaultlib, ../../../../gtp_example.srcs/sources_1/ip/gtp/gtp.v                                  
+Verilog, glbl.v,               *,   xil_defaultlib, glbl.v                                                                               

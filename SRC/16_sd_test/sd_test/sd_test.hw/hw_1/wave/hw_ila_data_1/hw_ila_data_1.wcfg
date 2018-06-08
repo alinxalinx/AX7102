@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="E:/Project/Artix7/verilog/sd_test/sd_test/sd_test.hw/hw_1/wave/hw_ila_data_1/hw_ila_data_1.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="19">
+	</WVObjectSize>
+	<wvobject fp_name="sd_state" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">sd_state[1:0]</obj_property>
+		<obj_property name="ObjectShortName">sd_state[1:0]</obj_property>
+	</wvobject>
+	<wvobject fp_name="&lt;const0&gt;" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">&lt;const0&gt;</obj_property>
+		<obj_property name="ObjectShortName">&lt;const0&gt;</obj_property>
+	</wvobject>
+	<wvobject fp_name="&lt;const0&gt;_1" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">&lt;const0&gt;_1</obj_property>
+		<obj_property name="ObjectShortName">&lt;const0&gt;_1</obj_property>
+	</wvobject>
+	<wvobject fp_name="init_o" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">init_o</obj_property>
+		<obj_property name="ObjectShortName">init_o</obj_property>
+	</wvobject>
+	<wvobject fp_name="write_o" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">write_o</obj_property>
+		<obj_property name="ObjectShortName">write_o</obj_property>
+	</wvobject>
+	<wvobject fp_name="read_o" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">read_o</obj_property>
+		<obj_property name="ObjectShortName">read_o</obj_property>
+	</wvobject>
+	<wvobject fp_name="initial_state" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">initial_state[3:0]</obj_property>
+		<obj_property name="ObjectShortName">initial_state[3:0]</obj_property>
+	</wvobject>
+	<wvobject fp_name="SD_clk_OBUF" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">SD_clk_OBUF</obj_property>
+		<obj_property name="ObjectShortName">SD_clk_OBUF</obj_property>
+	</wvobject>
+	<wvobject fp_name="SD_cs_OBUF" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">SD_cs_OBUF</obj_property>
+		<obj_property name="ObjectShortName">SD_cs_OBUF</obj_property>
+	</wvobject>
+	<wvobject fp_name="SD_datain_OBUF" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">SD_datain_OBUF</obj_property>
+		<obj_property name="ObjectShortName">SD_datain_OBUF</obj_property>
+	</wvobject>
+	<wvobject fp_name="SD_dataout_IBUF" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">SD_dataout_IBUF</obj_property>
+		<obj_property name="ObjectShortName">SD_dataout_IBUF</obj_property>
+	</wvobject>
+	<wvobject fp_name="write_state" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">write_state[3:0]</obj_property>
+		<obj_property name="ObjectShortName">write_state[3:0]</obj_property>
+	</wvobject>
+	<wvobject fp_name="write_req" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">write_req</obj_property>
+		<obj_property name="ObjectShortName">write_req</obj_property>
+	</wvobject>
+	<wvobject fp_name="rx_valid" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">rx_valid</obj_property>
+		<obj_property name="ObjectShortName">rx_valid</obj_property>
+	</wvobject>
+	<wvobject fp_name="read_req" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">read_req</obj_property>
+		<obj_property name="ObjectShortName">read_req</obj_property>
+	</wvobject>
+	<wvobject fp_name="read_state" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">read_state[3:0]</obj_property>
+		<obj_property name="ObjectShortName">read_state[3:0]</obj_property>
+	</wvobject>
+	<wvobject fp_name="data_come" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">data_come</obj_property>
+		<obj_property name="ObjectShortName">data_come</obj_property>
+	</wvobject>
+	<wvobject fp_name="myvalid_o" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">myvalid_o</obj_property>
+		<obj_property name="ObjectShortName">myvalid_o</obj_property>
+	</wvobject>
+	<wvobject fp_name="mydata_o" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">mydata_o[7:0]</obj_property>
+		<obj_property name="ObjectShortName">mydata_o[7:0]</obj_property>
+	</wvobject>
+</wave_config>
+

@@ -1,0 +1,26 @@
+MIG: 11:04:16 : Running synthesis.xit
+MIG: 11:04:16 : ################# RUNNING MIG BATCH ###################
+MIG: 11:04:16 : Writing IN file for 'ddr3'...compDirPath: c:/Xilinx/Vivado/2015.4/data/ip/xilinx/mig_7series_v2_4... instDirPath: e:/Project/AX7100/verilog/19_ov5640_pip/ov5640_pip/ov5640_pip.srcs/sources_1/ip/ddr3
+MIG: 11:04:16 : synp_flow:  -- synthesis_mode: Other
+MIG: 11:04:16 : outputDirectory: e:/Project/AX7100/verilog/19_ov5640_pip/ov5640_pip/ov5640_pip.srcs/sources_1/ip/ddr3/_tmp/
+MIG: 11:04:16 : vivado_mode: xpg_pa
+MIG: 11:04:16 :  locked false  
+MIG: 11:04:16 : HDL Language: Verilog
+MIG: 11:04:16 : compInfo: false
+MIG: 11:04:16 : Vivado Options xc7a100t fgg484 -1
+MIG: 11:04:16 : 1: xc7a100t 2: fgg484 3: -1
+MIG: 11:04:16 : relative mig path: coregen/ip/xilinx/other/com/xilinx/ip/mig_7series_v2_4/bin/nt64/mig.exe
+MIG: 11:04:16 : xilinx_path: C:/Xilinx/Vivado/2015.4/ids_lite/ISE
+MIG: 11:04:16 : I am in catch area
+MIG: 11:04:16 : Running C:/Xilinx/Vivado/2015.4/ids_lite/ISE/coregen/ip/xilinx/other/com/xilinx/ip/mig_7series_v2_4/bin/nt64/mig.exe -cg_exc_inp e:/Project/AX7100/verilog/19_ov5640_pip/ov5640_pip/ov5640_pip.srcs/sources_1/ip/ddr3/xil_txt.in -cg_exc_out e:/Project/AX7100/verilog/19_ov5640_pip/ov5640_pip/ov5640_pip.srcs/sources_1/ip/ddr3/xil_txt.out ... 
+MIG: 11:04:29 : XML_INPUT_FILE: e:/Project/AX7100/verilog/19_ov5640_pip/ov5640_pip/ov5640_pip.srcs/sources_1/ip/ddr3/mig_b.prj
+MIG: 11:04:29 : Component_Name: ddr3
+MIG: 11:04:29 : Moving ddr3 ...
+MIG: 11:04:29 : Moving ddr3.veo ...
+MIG: 11:04:29 : Moving ddr3_xmdf.tcl ...
+MIG: 11:04:29 : Running vlog_synth_rpr.xit
+MIG: 11:04:29 : IGN:     <ModuleName>ddr3</ModuleName> <==>     <ModuleName>ddr3</ModuleName> 
+MIG: 11:04:29 : IGN:         <InputClkFreq>200</InputClkFreq> <==>         <InputClkFreq>200</InputClkFreq> 
+MIG: 11:04:29 : Running implementation.xit
+MIG: 11:04:29 : IGN:     <ModuleName>ddr3</ModuleName> <==>     <ModuleName>ddr3</ModuleName> 
+MIG: 11:04:29 : IGN:         <InputClkFreq>200</InputClkFreq> <==>         <InputClkFreq>200</InputClkFreq> 

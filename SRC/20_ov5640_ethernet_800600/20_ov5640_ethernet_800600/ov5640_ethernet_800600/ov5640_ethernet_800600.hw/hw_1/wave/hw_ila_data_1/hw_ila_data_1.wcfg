@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="E:/Project/AX7100/verilog/20_ov5640_ethernet_800600/ov5640_ethernet_800600/ov5640_ethernet_800600.hw/hw_1/wave/hw_ila_data_1/hw_ila_data_1.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="6">
+	</WVObjectSize>
+	<wvobject fp_name="reg_conf_done" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">reg_conf_done</obj_property>
+		<obj_property name="ObjectShortName">reg_conf_done</obj_property>
+	</wvobject>
+	<wvobject fp_name="fifo_wr_en" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">fifo_wr_en</obj_property>
+		<obj_property name="ObjectShortName">fifo_wr_en</obj_property>
+	</wvobject>
+	<wvobject fp_name="cmos1_pclk_IBUF_BUFG" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">cmos1_pclk_IBUF_BUFG</obj_property>
+		<obj_property name="ObjectShortName">cmos1_pclk_IBUF_BUFG</obj_property>
+	</wvobject>
+	<wvobject fp_name="cmos1_d_IBUF" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">cmos1_d_IBUF[7:0]</obj_property>
+		<obj_property name="ObjectShortName">cmos1_d_IBUF[7:0]</obj_property>
+	</wvobject>
+	<wvobject fp_name="fifo_prog_full" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">fifo_prog_full</obj_property>
+		<obj_property name="ObjectShortName">fifo_prog_full</obj_property>
+	</wvobject>
+	<wvobject fp_name="fifo_rd_en" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">fifo_rd_en</obj_property>
+		<obj_property name="ObjectShortName">fifo_rd_en</obj_property>
+	</wvobject>
+</wave_config>
+

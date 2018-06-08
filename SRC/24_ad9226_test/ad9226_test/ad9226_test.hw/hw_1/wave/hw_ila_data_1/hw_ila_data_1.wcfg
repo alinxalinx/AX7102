@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="E:/Project/AX7100/verilog/24_ad9226_test/ad9226_test/ad9226_test.hw/hw_1/wave/hw_ila_data_1/hw_ila_data_1.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="2">
+	</WVObjectSize>
+	<wvobject fp_name="ad_ch1" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">ad_ch1[11:0]</obj_property>
+		<obj_property name="ObjectShortName">ad_ch1[11:0]</obj_property>
+	</wvobject>
+	<wvobject fp_name="ad_ch2" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">ad_ch2[11:0]</obj_property>
+		<obj_property name="ObjectShortName">ad_ch2[11:0]</obj_property>
+	</wvobject>
+</wave_config>
+

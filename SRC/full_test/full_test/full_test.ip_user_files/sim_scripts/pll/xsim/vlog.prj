@@ -1,0 +1,6 @@
+verilog xil_defaultlib "../../../../full_test.srcs/pll/ip/pll/pll_clk_wiz.v" 
+verilog xil_defaultlib "../../../../full_test.srcs/pll/ip/pll/pll.v" 
+
+verilog xil_defaultlib "glbl.v"
+
+nosort

@@ -1,0 +1,1007 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Product Version: Vivado v2015.4 (64-bit)              -->
+<!--                                                         -->
+<!-- Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.   -->
+
+<Project Version="7" Minor="10" Path="Y:/project/AX/AX7102/CD/02_demo/full_test/full_test/full_test.xpr">
+  <DefaultLaunch Dir="$PRUNDIR"/>
+  <Configuration>
+    <Option Name="Id" Val="c9a09cc7dcda40169a012f86e254dca3"/>
+    <Option Name="Part" Val="xc7a100tfgg484-2"/>
+    <Option Name="CompiledLibDir" Val="$PPRDIR/../../../../../../xilinx_sim_lib"/>
+    <Option Name="CompiledLibDirModelSim" Val="$PPRDIR/../../../../../../xilinx_sim_lib"/>
+    <Option Name="CompiledLibDirQuesta" Val="$PCACHEDIR/compile_simlib/questa"/>
+    <Option Name="CompiledLibDirIES" Val="$PCACHEDIR/compile_simlib/ies"/>
+    <Option Name="CompiledLibDirVCS" Val="$PCACHEDIR/compile_simlib/vcs"/>
+    <Option Name="CompiledLibDirRiviera" Val="$PCACHEDIR/compile_simlib/riviera"/>
+    <Option Name="CompiledLibDirActivehdl" Val="$PCACHEDIR/compile_simlib/activehdl"/>
+    <Option Name="TargetSimulator" Val="ModelSim"/>
+    <Option Name="BoardPart" Val=""/>
+    <Option Name="ActiveSimSet" Val="sim_1"/>
+    <Option Name="DefaultLib" Val="xil_defaultlib"/>
+    <Option Name="EnableCoreContainer" Val="FALSE"/>
+    <Option Name="CreateRefXciForCoreContainers" Val="FALSE"/>
+    <Option Name="IPUserFilesDir" Val="$PPRDIR/full_test.ip_user_files"/>
+    <Option Name="IPStaticSourceDir" Val="$PPRDIR/full_test.ip_user_files/ipstatic"/>
+    <Option Name="EnableBDX" Val="FALSE"/>
+  </Configuration>
+  <FileSets Version="1" Minor="31">
+    <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
+      <Filter Type="Srcs"/>
+      <File Path="$PSRCDIR/sources_1/imports/example_design/support/gtp_clock_module.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/example_design/support/gtp_clock_module.v"/>
+          <Attr Name="ImportTime" Val="1469599889"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/rtc/i2c_com_rtc.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/rtc/cmd_control.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ddr/mem_burst.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ddr/mem_burst.v"/>
+          <Attr Name="ImportTime" Val="1472178546"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/example_design/support/gtp_gt_usrclk_source.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/example_design/support/gtp_gt_usrclk_source.v"/>
+          <Attr Name="ImportTime" Val="1469599889"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/example_design/support/gtp_cpll_railing.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/example_design/support/gtp_cpll_railing.v"/>
+          <Attr Name="ImportTime" Val="1469599889"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/example_design/support/gtp_common_reset.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/example_design/support/gtp_common_reset.v"/>
+          <Attr Name="ImportTime" Val="1469599889"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/example_design/support/gtp_common.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/example_design/support/gtp_common.v"/>
+          <Attr Name="ImportTime" Val="1469599889"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sd/sd_write.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sd/sd_read.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sd/sd_initial.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/ethernet/ipsend.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/ethernet/iprecieve.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/ethernet/crc.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ov5640/i2c_com.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/rtc/ds1302_module.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ddr/ddr_ctrl.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ddr/ddr_ctrl.v"/>
+          <Attr Name="ImportTime" Val="1472357951"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ddr/dcfifo_ctrl.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ddr/dcfifo_ctrl.v"/>
+          <Attr Name="ImportTime" Val="1473241542"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/sources_1/bank_switch.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/bank_switch.v"/>
+          <Attr Name="ImportTime" Val="1473216618"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/example_design/support/gtp_support.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/example_design/support/gtp_support.v"/>
+          <Attr Name="ImportTime" Val="1469599889"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/rs232/uartrx.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/rs232/uartctrl.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/rs232/clkdiv.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/ethernet/udp.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/rtc/rtc_time.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/sources_1/video_packet_rec.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_video_example/gtp_example.srcs/sources_1/video_packet_rec.v"/>
+          <Attr Name="ImportTime" Val="1476336041"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/sources_1/video_packet_send.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_video_example/gtp_example.srcs/sources_1/video_packet_send.v"/>
+          <Attr Name="ImportTime" Val="1476261736"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/word_align.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_video_example/gtp_example.srcs/sources_1/word_align.v"/>
+          <Attr Name="ImportTime" Val="1470105930"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/sources_1/vga/vga_disp.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/vga/vga_disp.v"/>
+          <Attr Name="ImportTime" Val="1473244155"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/sources_1/system_ctrl.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/system_ctrl.v"/>
+          <Attr Name="ImportTime" Val="1472201269"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ov5640/reg_config.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ov5640/reg_config.v"/>
+          <Attr Name="ImportTime" Val="1473418191"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ov5640/power_on_delay.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ov5640/power_on_delay.v"/>
+          <Attr Name="ImportTime" Val="1473246972"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ddr/ddr_2fifo_top.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ddr/ddr_2fifo_top.v"/>
+          <Attr Name="ImportTime" Val="1473233422"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/sources_1/cmos_select.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/cmos_select.v"/>
+          <Attr Name="ImportTime" Val="1473416908"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ov5640/camera_capture.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ov5640/camera_capture.v"/>
+          <Attr Name="ImportTime" Val="1473492711"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/example_design/gtp_exdes.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/example_design/gtp_exdes.v"/>
+          <Attr Name="ImportTime" Val="1469599891"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/sources_1/cmos_8_16bit.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_video_example/gtp_example.srcs/sources_1/cmos_8_16bit.v"/>
+          <Attr Name="ImportTime" Val="1451352288"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/rs232/uarttx.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/rs232/uart2_test.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/lcd/lcd_test.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/ethernet/ethernet_test.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/usb/usb_test.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/rtc/rtc_test.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/key_led/key_test.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/sources_1/ov5640_ddr_vga.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ov5640_ddr_vga.v"/>
+          <Attr Name="ImportTime" Val="1473496351"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/top.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/example_design/gt_rom_init_rx.dat">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/example_design/gt_rom_init_rx.dat"/>
+          <Attr Name="ImportTime" Val="1469599895"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/example_design/gt_rom_init_tx.dat">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/example_design/gt_rom_init_tx.dat"/>
+          <Attr Name="ImportTime" Val="1469599896"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ip/ddr3/mig_b.prj">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ip/ddr3/mig_b.prj"/>
+          <Attr Name="ImportTime" Val="1482411070"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ip/ddr3/ddr3.upgrade_log">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ip/ddr3/ddr3.upgrade_log"/>
+          <Attr Name="ImportTime" Val="1482411070"/>
+        </FileInfo>
+      </File>
+      <File Path="F:/AX7100/t1/gtp_ov5640_vga/gtp_ov5640_vga.srcs/sources_1/ip/fifo_2048_32i_16o/fifo_2048_32i_16o.upgrade_log">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_video_example/gtp_example.srcs/sources_1/ip/fifo_2048_32i_16o/fifo_2048_32i_16o.upgrade_log"/>
+          <Attr Name="ImportTime" Val="1482410866"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/ip/fifo_2048_32i_8o/fifo_2048_32i_8o.upgrade_log">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_video_example/gtp_example.srcs/sources_1/ip/fifo_2048_32i_8o/fifo_2048_32i_8o.upgrade_log"/>
+          <Attr Name="ImportTime" Val="1482410867"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/ip/fifo_4096_16i_32o/fifo_4096_16i_32o.upgrade_log">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_video_example/gtp_example.srcs/sources_1/ip/fifo_4096_16i_32o/fifo_4096_16i_32o.upgrade_log"/>
+          <Attr Name="ImportTime" Val="1482410868"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/ip/gtp/gtp.upgrade_log">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_video_example/gtp_example.srcs/sources_1/ip/gtp/gtp.upgrade_log"/>
+          <Attr Name="ImportTime" Val="1482410871"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/ip/ila_0/ila_0.upgrade_log">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_video_example/gtp_example.srcs/sources_1/ip/ila_0/ila_0.upgrade_log"/>
+          <Attr Name="ImportTime" Val="1482410896"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ip/pll/pll.upgrade_log">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ip/pll/pll.upgrade_log"/>
+          <Attr Name="ImportTime" Val="1482410899"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ip/rdfifo/rdfifo.upgrade_log">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ip/rdfifo/rdfifo.upgrade_log"/>
+          <Attr Name="ImportTime" Val="1482410900"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/ip/wrfifo/wrfifo.upgrade_log">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ip/wrfifo/wrfifo.upgrade_log"/>
+          <Attr Name="ImportTime" Val="1482410901"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/ddr3/ip/ddr3/mig_a.prj">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ip/ddr3/mig_a.prj"/>
+          <Attr Name="ImportTime" Val="1482411070"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../../22_gtp_ov5640_vga/archive_project_summary.txt"/>
+      <Config>
+        <Option Name="DesignMode" Val="RTL"/>
+        <Option Name="TopModule" Val="top"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+      <Filter Type="Constrs"/>
+      <File Path="$PSRCDIR/constrs_1/imports/example_design/gtp_exdes.xdc">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/example_design/gtp_exdes.xdc"/>
+          <Attr Name="ImportTime" Val="1469599893"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TargetConstrsFile" Val="$PSRCDIR/constrs_1/imports/example_design/gtp_exdes.xdc"/>
+        <Option Name="ConstrsType" Val="XDC"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1">
+      <Filter Type="Srcs"/>
+      <File Path="$PSRCDIR/sim_1/imports/simulation/gtp_tb.v">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/simulation/gtp_tb.v"/>
+          <Attr Name="ImportTime" Val="1469599900"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sim_1/imports/simulation/functional/gt_rom_init_rx.dat">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/simulation/functional/gt_rom_init_rx.dat"/>
+          <Attr Name="ImportTime" Val="1469599905"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sim_1/imports/simulation/functional/gt_rom_init_tx.dat">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp/simulation/functional/gt_rom_init_tx.dat"/>
+          <Attr Name="ImportTime" Val="1469599906"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="DesignMode" Val="RTL"/>
+        <Option Name="TopModule" Val="gtp_TB"/>
+        <Option Name="SimMode" Val="post-implementation"/>
+        <Option Name="SrcSet" Val="sources_1"/>
+        <Option Name="modelsim.simulate.runtime" Val="100ms"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="ddr3" Type="BlockSrcs" RelSrcDir="$PSRCDIR/ddr3">
+      <File Path="$PSRCDIR/ddr3/ip/ddr3/ddr3.xci">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ip/ddr3/ddr3.xci"/>
+          <Attr Name="ImportTime" Val="1482411071"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="ddr3"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="fifo_4096_16i_32o" Type="BlockSrcs" RelSrcDir="$PSRCDIR/fifo_4096_16i_32o">
+      <File Path="$PSRCDIR/sources_1/ip/fifo_4096_16i_32o/fifo_4096_16i_32o.xci">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_video_example/gtp_example.srcs/sources_1/ip/fifo_4096_16i_32o/fifo_4096_16i_32o.xci"/>
+          <Attr Name="ImportTime" Val="1482410868"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="fifo_4096_16i_32o"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="gtp" Type="BlockSrcs" RelSrcDir="$PSRCDIR/gtp">
+      <File Path="$PSRCDIR/sources_1/ip/gtp/gtp.xci">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_test/gtp_test.srcs/sources_1/ip/gtp/gtp.xci"/>
+          <Attr Name="ImportTime" Val="1469585005"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="gtp"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="rdfifo" Type="BlockSrcs" RelSrcDir="$PSRCDIR/rdfifo">
+      <File Path="$PSRCDIR/rdfifo/ip/rdfifo/rdfifo.xci">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ip/rdfifo/rdfifo.xci"/>
+          <Attr Name="ImportTime" Val="1482410900"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="rdfifo"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="pll" Type="BlockSrcs" RelSrcDir="$PSRCDIR/pll">
+      <File Path="$PSRCDIR/pll/ip/pll/pll.xci">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ip/pll/pll.xci"/>
+          <Attr Name="ImportTime" Val="1482410899"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="pll"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="fifo_2048_32i_8o" Type="BlockSrcs" RelSrcDir="$PSRCDIR/fifo_2048_32i_8o">
+      <File Path="$PSRCDIR/sources_1/ip/fifo_2048_32i_8o/fifo_2048_32i_8o.xci">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/t1/gtp_video_example/gtp_example.srcs/sources_1/ip/fifo_2048_32i_8o/fifo_2048_32i_8o.xci"/>
+          <Attr Name="ImportTime" Val="1482410867"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="fifo_2048_32i_8o"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="wrfifo" Type="BlockSrcs" RelSrcDir="$PSRCDIR/wrfifo">
+      <File Path="$PSRCDIR/wrfifo/ip/wrfifo/wrfifo.xci">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="F:/AX7100/gtp_test/ov5640_ddr_vga/ov5640_ddr_vga/ov5640_ddr_vga.srcs/sources_1/ip/wrfifo/wrfifo.xci"/>
+          <Attr Name="ImportTime" Val="1482410901"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="wrfifo"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="ram" Type="BlockSrcs" RelSrcDir="$PSRCDIR/ram">
+      <File Path="$PSRCDIR/sources_1/ip/ram/ram.xci">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="ram"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="pll_lcd" Type="BlockSrcs" RelSrcDir="$PSRCDIR/pll_lcd">
+      <File Path="$PSRCDIR/sources_1/ip/pll_lcd/pll_lcd.xci">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="pll_lcd"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="pll_sd" Type="BlockSrcs" RelSrcDir="$PSRCDIR/pll_sd">
+      <File Path="$PSRCDIR/sources_1/ip/pll_sd/pll_sd.xci">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="pll_sd"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="sd_ram" Type="BlockSrcs" RelSrcDir="$PSRCDIR/sd_ram">
+      <File Path="$PSRCDIR/sources_1/ip/sd_ram/sd_ram.xci">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="sd_ram"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="ila_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/ila_0">
+      <File Path="$PSRCDIR/sources_1/ip/ila_0/ila_0.xci">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="ila_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+  </FileSets>
+  <Simulators>
+    <Simulator Name="XSim">
+      <Option Name="Description" Val="Vivado Simulator"/>
+      <Option Name="CompiledLib" Val="0"/>
+    </Simulator>
+    <Simulator Name="ModelSim">
+      <Option Name="Description" Val="ModelSim Simulator"/>
+    </Simulator>
+    <Simulator Name="Questa">
+      <Option Name="Description" Val="Questa Advanced Simulator"/>
+    </Simulator>
+    <Simulator Name="IES">
+      <Option Name="Description" Val="Incisive Enterprise Simulator (IES)"/>
+    </Simulator>
+    <Simulator Name="VCS">
+      <Option Name="Description" Val="Verilog Compiler Simulator (VCS)"/>
+    </Simulator>
+    <Simulator Name="Riviera">
+      <Option Name="Description" Val="Riviera-PRO Simulator"/>
+    </Simulator>
+    <Simulator Name="ActiveHDL">
+      <Option Name="Description" Val="Active-HDL Simulator"/>
+    </Simulator>
+  </Simulators>
+  <Runs Version="1" Minor="10">
+    <Run Id="synth_1" Type="Ft3:Synth" SrcSet="sources_1" Part="xc7a100tfgg484-2" ConstrsSet="constrs_1" Description="Vivado Synthesis Defaults" State="current" Dir="$PRUNDIR/synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="ddr3_synth_1" Type="Ft3:Synth" SrcSet="ddr3" Part="xc7a100tfgg484-2" ConstrsSet="ddr3" Description="Vivado Synthesis Defaults" Dir="$PRUNDIR/ddr3_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="fifo_4096_16i_32o_synth_1" Type="Ft3:Synth" SrcSet="fifo_4096_16i_32o" Part="xc7a100tfgg484-2" ConstrsSet="fifo_4096_16i_32o" Description="Vivado Synthesis Defaults" Dir="$PRUNDIR/fifo_4096_16i_32o_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="gtp_synth_1" Type="Ft3:Synth" SrcSet="gtp" Part="xc7a100tfgg484-2" ConstrsSet="gtp" Description="Vivado Synthesis Defaults" Dir="$PRUNDIR/gtp_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="rdfifo_synth_1" Type="Ft3:Synth" SrcSet="rdfifo" Part="xc7a100tfgg484-2" ConstrsSet="rdfifo" Description="Vivado Synthesis Defaults" Dir="$PRUNDIR/rdfifo_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="pll_synth_1" Type="Ft3:Synth" SrcSet="pll" Part="xc7a100tfgg484-2" ConstrsSet="pll" Description="Vivado Synthesis Defaults" Dir="$PRUNDIR/pll_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="fifo_2048_32i_8o_synth_1" Type="Ft3:Synth" SrcSet="fifo_2048_32i_8o" Part="xc7a100tfgg484-2" ConstrsSet="fifo_2048_32i_8o" Description="Vivado Synthesis Defaults" Dir="$PRUNDIR/fifo_2048_32i_8o_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="wrfifo_synth_1" Type="Ft3:Synth" SrcSet="wrfifo" Part="xc7a100tfgg484-2" ConstrsSet="wrfifo" Description="Vivado Synthesis Defaults" Dir="$PRUNDIR/wrfifo_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="ram_synth_1" Type="Ft3:Synth" SrcSet="ram" Part="xc7a100tfgg484-2" ConstrsSet="ram" Description="Vivado Synthesis Defaults" Dir="$PRUNDIR/ram_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="pll_lcd_synth_1" Type="Ft3:Synth" SrcSet="pll_lcd" Part="xc7a100tfgg484-2" ConstrsSet="pll_lcd" Description="Vivado Synthesis Defaults" Dir="$PRUNDIR/pll_lcd_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="pll_sd_synth_1" Type="Ft3:Synth" SrcSet="pll_sd" Part="xc7a100tfgg484-2" ConstrsSet="pll_sd" Description="Vivado Synthesis Defaults" Dir="$PRUNDIR/pll_sd_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="sd_ram_synth_1" Type="Ft3:Synth" SrcSet="sd_ram" Part="xc7a100tfgg484-2" ConstrsSet="sd_ram" Description="Vivado Synthesis Defaults" Dir="$PRUNDIR/sd_ram_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="ila_0_synth_1" Type="Ft3:Synth" SrcSet="ila_0" Part="xc7a100tfgg484-2" ConstrsSet="ila_0" Description="Vivado Synthesis Defaults" Dir="$PRUNDIR/ila_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="constrs_1" Description="Vivado Implementation Defaults" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream">
+          <Option Id="BinFile">1</Option>
+        </Step>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+    </Run>
+    <Run Id="ddr3_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="ddr3" Description="Vivado Implementation Defaults" SynthRun="ddr3_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+    </Run>
+    <Run Id="fifo_4096_16i_32o_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="fifo_4096_16i_32o" Description="Vivado Implementation Defaults" SynthRun="fifo_4096_16i_32o_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+    </Run>
+    <Run Id="gtp_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="gtp" Description="Vivado Implementation Defaults" SynthRun="gtp_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+    </Run>
+    <Run Id="rdfifo_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="rdfifo" Description="Vivado Implementation Defaults" SynthRun="rdfifo_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+    </Run>
+    <Run Id="pll_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="pll" Description="Vivado Implementation Defaults" SynthRun="pll_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+    </Run>
+    <Run Id="fifo_2048_32i_8o_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="fifo_2048_32i_8o" Description="Vivado Implementation Defaults" SynthRun="fifo_2048_32i_8o_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+    </Run>
+    <Run Id="wrfifo_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="wrfifo" Description="Vivado Implementation Defaults" SynthRun="wrfifo_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+    </Run>
+    <Run Id="ram_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="ram" Description="Vivado Implementation Defaults" SynthRun="ram_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+    </Run>
+    <Run Id="pll_lcd_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="pll_lcd" Description="Vivado Implementation Defaults" SynthRun="pll_lcd_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+    </Run>
+    <Run Id="pll_sd_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="pll_sd" Description="Vivado Implementation Defaults" SynthRun="pll_sd_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+    </Run>
+    <Run Id="sd_ram_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="sd_ram" Description="Vivado Implementation Defaults" SynthRun="sd_ram_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+    </Run>
+    <Run Id="ila_0_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tfgg484-2" ConstrsSet="ila_0" Description="Vivado Implementation Defaults" SynthRun="ila_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+    </Run>
+  </Runs>
+</Project>
